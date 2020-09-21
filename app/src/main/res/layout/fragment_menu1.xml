@@ -3,10 +3,143 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/tv_title_1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="프레그 1"/>
+        android:text="확진환자"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="18dp"
+        />
+    <TextView
+        android:id="@+id/tv_title_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title_1"
+        android:layout_alignLeft="@+id/tv_title_1"
+        android:layout_marginBottom="5dp"
+        android:text="111111"
+        android:textSize="20dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_title_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title_2"
+        android:layout_alignLeft="@+id/tv_title_2"
+        android:text="3214"
+        android:layout_marginBottom="5dp"
+        android:textSize="10dp" />
+
+
+
+    <TextView
+        android:id="@+id/tv_check_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="검사진행"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="18dp"
+        android:layout_toRightOf="@+id/tv_title_1"
+        android:layout_marginLeft="25dp"
+        />
+    <TextView
+        android:id="@+id/tv_check_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_check_1"
+        android:layout_alignLeft="@+id/tv_check_1"
+        android:layout_marginBottom="5dp"
+        android:text="222222"
+        android:textSize="20dp"
+        />
+    <TextView
+        android:id="@+id/tv_check_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_check_2"
+        android:layout_alignLeft="@+id/tv_check_2"
+        android:text="3214"
+        android:layout_marginBottom="5dp"
+        android:textSize="10dp" />
+
+
+
+    <TextView
+        android:id="@+id/tv_safe_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="격리해제"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="18dp"
+        android:layout_toRightOf="@+id/tv_check_1"
+        android:layout_marginLeft="25dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_safe_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_safe_1"
+        android:layout_alignLeft="@+id/tv_safe_1"
+        android:layout_marginBottom="5dp"
+        android:text="333333"
+        android:textSize="20dp"
+        />
+    <TextView
+        android:id="@+id/tv_safe_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_safe_2"
+        android:layout_alignLeft="@+id/tv_safe_2"
+        android:layout_marginLeft="0dp"
+        android:text="3214"
+        android:layout_marginBottom="5dp"
+        android:textSize="10dp" />
+
+
+
+    <TextView
+        android:id="@+id/tv_die_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="사망자"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="18dp"
+        android:layout_toRightOf="@+id/tv_safe_1"
+        android:layout_marginLeft="25dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_die_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_safe_1"
+        android:layout_alignLeft="@+id/tv_die_1"
+        android:layout_marginBottom="5dp"
+        android:text="444444"
+        android:textSize="20dp"
+        />
+    <TextView
+        android:id="@+id/tv_die_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_safe_2"
+        android:layout_alignLeft="@+id/tv_die_2"
+        android:layout_marginLeft="0dp"
+        android:text="3214"
+        android:layout_marginBottom="5dp"
+        android:textSize="10dp" />
+
+
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -16,6 +149,8 @@
         android:layout_marginBottom="55dp"
         android:layout_marginRight="10dp"
         android:src="@drawable/ic_home_black_24dp"/>
+
+
 
 
 </RelativeLayout>
