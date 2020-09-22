@@ -43,4 +43,17 @@ dependencies {
 
     // 웹뷰 implementation
     implementation 'androidx.webkit:webkit:1.2.0'
+
+    // 리사이클러뷰 implementation
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
+
+    // 카드뷰 implementation
+    implementation "androidx.cardview:cardview:1.0.0"
+
+    // 크롤링 implementation
+    implementation "org.jsoup:jsoup:1.13.1"
+
+    // 이미지 Picaso implementation
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 }

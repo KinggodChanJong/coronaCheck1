@@ -3,10 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_news"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="프레그 3"/>
+        android:scrollbars="vertical"
+        android:layout_marginBottom="50dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
