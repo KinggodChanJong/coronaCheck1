@@ -2,25 +2,21 @@ package com.kang.coronacheck1;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -28,9 +24,7 @@ import com.kang.coronacheck1.Adapter.NewsAdapter;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,8 +41,10 @@ public class Menu3Fragment extends Fragment implements View.OnClickListener {
     RecyclerView.LayoutManager layoutManager;
     RecyclerView recyclerView;
     NewsAdapter adapter;
+
     ArrayList<String> listTitle = new ArrayList<>();
     ArrayList<String> listName = new ArrayList<>();
+    ArrayList<String> listImageUrl = new ArrayList<>();
     ArrayList<String> listUrl = new ArrayList<>();
 
     @Override
@@ -106,9 +102,7 @@ public class Menu3Fragment extends Fragment implements View.OnClickListener {
     }
 
     private class NewsJsoup extends AsyncTask<Void, Void, Void> {
-        ArrayList<String> listTitle = new ArrayList<>();
-        ArrayList<String> listName = new ArrayList<>();
-        ArrayList<String> listUrl = new ArrayList<>();
+
         @Override
         protected Void doInBackground(Void... voids) {
             try {
@@ -119,17 +113,20 @@ public class Menu3Fragment extends Fragment implements View.OnClickListener {
                     public void run() {
                         int count=0;
                         for(int i =1;i<50;i++){
-                            Elements rank_list1 = doc.select("#sp_nws"+i).select("dt [title]");
-                            if(rank_list1.isEmpty()){
+                            Elements news_title = doc.select("#sp_nws"+i).select("dt [title]");
+                            if(news_title.isEmpty()){
                                 continue;
                             }
                             count++;
-                            Elements rank_list_name = doc.select("#sp_nws"+i).select("dd").not(".txt_inline");
-                            Elements image_list1 = doc.select("#sp_nws"+i).select("img");
+                            Elements news_contents = doc.select("#sp_nws"+i).select("dd").not(".txt_inline");
+                            Elements news_image = doc.select("#sp_nws"+i).select("img");
+                            Elements news_url =doc.select("#sp_nws"+i).select("a");
 
-                            listTitle.add(rank_list1.text());
-                            listName.add(rank_list_name.text());
-                            listUrl.add(image_list1.attr("src"));
+                            Log.d(TAG, news_url.attr("href"));
+                            listTitle.add(news_title.text());
+                            listName.add(news_contents.text());
+                            listImageUrl.add(news_image.attr("src"));
+                            listUrl.add(news_url.attr("href"));
 
                             if(count ==10){
                                 break;
@@ -138,8 +135,9 @@ public class Menu3Fragment extends Fragment implements View.OnClickListener {
                         for (int i = 0; i < 10 ; i++) {
                             NewsItem data = new NewsItem();
                             data.setTitle(listTitle.get(i));
-                            data.setImage(listUrl.get(i));
+                            data.setImage(listImageUrl.get(i));
                             data.setContents(listName.get(i));
+                            data.setUrl(listUrl.get(i));
                             adapter.addItem(data);
                         }
                         adapter.notifyDataSetChanged();

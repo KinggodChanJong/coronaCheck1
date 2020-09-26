@@ -3,8 +3,11 @@ package com.kang.coronacheck1;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +26,11 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -146,6 +154,7 @@ public class Menu1Fragment extends Fragment implements View.OnClickListener {
         fabQrcode = (FloatingActionButton)viewGroup.findViewById(R.id.fab);
         fabQrcode.setOnClickListener(this);
 
+        getData();
 
         return viewGroup;
     };
@@ -157,5 +166,32 @@ public class Menu1Fragment extends Fragment implements View.OnClickListener {
         Intent intent = new Intent(getActivity(), QrcodeActivity.class);
         startActivity(intent);
         getActivity().isDestroyed();
+    }
+    private void getData(){
+        Log.d(TAG, "Menu1Fragment - getData() called");
+        Menu1Fragment.HomeJsoup jsoupAsyncTask = new Menu1Fragment.HomeJsoup();
+        jsoupAsyncTask.execute();
+    }
+
+    private class HomeJsoup extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                Document doc = Jsoup.connect("https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6").get();
+                Handler handler = new Handler(Looper.getMainLooper()); // 객체생성
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Elements report_patient = doc.select("aria-label");
+                        Log.d(TAG, report_patient.text());
+
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 }

@@ -5,58 +5,55 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kang.coronacheck1.NewsItem;
 import com.kang.coronacheck1.NewsWebViewActivity;
 import com.kang.coronacheck1.R;
-import com.squareup.picasso.Picasso;
+import com.kang.coronacheck1.ReportItem;
 
 import java.util.ArrayList;
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
+public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder> {
 
     private static final String TAG = "로그";
 
-    private ArrayList<NewsItem> listData = new ArrayList<>();
+    private ArrayList<ReportItem> listData = new ArrayList<>();
 
     Context context ;
 
     @NonNull
     @Override
-    public NewsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ReportAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_news, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_report, viewGroup, false);
         context = view.getContext();
-        return new ViewHolder(view);
+        return new ReportAdapter.ViewHolder(view);
     }
     @Override
-    public void onBindViewHolder(@NonNull NewsAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ReportAdapter.ViewHolder viewHolder, int i) {
         viewHolder.onBind(listData.get(i));
     }
     @Override
     public int getItemCount() {
         return listData.size();
     }
-    public void addItem(NewsItem data) {
+    public void addItem(ReportItem data) {
         // 외부에서 item을 추가시킬 함수입니다.
         listData.add(data);
     }
     class ViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView mTitle, mContents;
-        private ImageView mImage;
-        private String mUrl="";
+        private TextView mTitle, mPatient, mDaily, mDeath;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mTitle = itemView.findViewById(R.id.tv_news_item_title);
-            mContents = itemView.findViewById(R.id.tv_news_item_contents);
-            mImage  = itemView.findViewById(R.id.iv_news_item_image);
+            mTitle = itemView.findViewById(R.id.tv_report_item_title);
+            mPatient = itemView.findViewById(R.id.tv_report_item_patient);
+            mDaily  = itemView.findViewById(R.id.tv_report_item_daily);
+            mDeath = itemView.findViewById(R.id.tv_report_item_death);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -65,26 +62,19 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                     if(pos !=RecyclerView.NO_POSITION){
                         Intent intent = new Intent(context, NewsWebViewActivity.class);
 
-                        intent.putExtra("url",mUrl); /*송신*/
                         context.startActivity(intent);
 
                         Toast.makeText(context, mTitle.getText(),Toast.LENGTH_SHORT).show();
                     }
                 }
             });
-
         }
 
-        void onBind(NewsItem data){
+        void onBind(ReportItem data){
             mTitle.setText(data.getTitle());
-            mContents.setText(data.getContents());
-            if(data.getImage().isEmpty()){
-                Picasso.get().load(R.drawable.ic_home_black_24dp).into(mImage);
-            }
-            else{
-                Picasso.get().load(data.getImage()).into(mImage);
-            }
-            mUrl=data.getUrl();
+            mPatient.setText(data.getPatient());
+            mDaily.setText(data.getDaily());
+            mDeath.setText(data.getDeath());
         }
     }
 }

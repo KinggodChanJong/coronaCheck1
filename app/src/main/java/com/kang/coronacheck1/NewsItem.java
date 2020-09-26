@@ -1,19 +1,13 @@
 package com.kang.coronacheck1;
 
-import android.graphics.drawable.Drawable;
-
 public class NewsItem {
-    String title, contents, image;
+    String title, contents, image, url;
 
     public NewsItem() {
         this.title = title;
         this.contents = contents;
         this.image = image;
-    }
-    public NewsItem(String title, String contents, String image){
-        this.title = title;
-        this.contents = contents;
-        this.image = image;
+        this.url = url;
     }
 
     public String getTitle() {
@@ -38,5 +32,13 @@ public class NewsItem {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
