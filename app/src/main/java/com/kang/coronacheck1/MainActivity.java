@@ -19,7 +19,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.w3c.dom.Text;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,7 +65,28 @@ public class MainActivity extends AppCompatActivity {
 
 
         Log.d(TAG, "MainActivity - onCreate() called");
+        TextView hiyo = (TextView)findViewById(R.id.tv_instance);
+        Log.d(TAG, "MainActivity - onCreate() TextView called"+hiyo.getText().toString());
+        /**
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> user = new HashMap<>();
+        user.put("first", hiyo.getText().toString());
 
+        db.collection("users")
+                .add(user)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
+**/
         //임시 세팅 버튼
         Button web_view = (Button) findViewById(R.id.button);
         web_view.setOnClickListener(new View.OnClickListener() {

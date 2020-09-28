@@ -128,7 +128,9 @@ public class Menu2Fragment extends Fragment implements View.OnClickListener {
                             ReportItem data = new ReportItem();
                             listPatient.add(report_patient.get(i).text());
                             listTitle.add(report_title.get(i).text());
-                            listDaily.add(report_daily.get(i).text());
+                            String deleteString = report_daily.get(i).text().replace("(","");
+                            deleteString = deleteString.replace(")", "");
+                            listDaily.add(deleteString);
                             listDeath.add(report_death.get(3).text());
 
                             data.setTitle(listTitle.get(i));
