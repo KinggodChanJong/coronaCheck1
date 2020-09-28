@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -15,7 +16,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -25,7 +26,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
@@ -56,6 +56,16 @@ dependencies {
     // 이미지 Picaso implementation
     implementation 'com.squareup.picasso:picasso:2.71828'
 
-    //막대그래프
+    //막대그래프 implementation
     implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
+
+    // firebase 연동 implementation
+    implementation 'com.google.firebase:firebase-analytics:17.5.0'
+    implementation 'com.google.firebase:firebase-firestore:21.2.1'
+
+    // Multi-Dex 에러 위한 implementation
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    // CircleImageView implementation
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
 }

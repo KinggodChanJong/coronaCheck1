@@ -4,12 +4,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/ll_fragment2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <TextView
+            android:id="@+id/tv_report_frag_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="18dp"
+            android:layout_weight="0.9"
+            android:gravity="center_horizontal"
+            android:text="도시 이름"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/tv_report_frag_patient"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv_report_item_title"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1.1"
+            android:gravity="center_horizontal"
+            android:text="누적 확진자"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/tv_report_frag_daily"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv_report_item_patient"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1.1"
+            android:gravity="center_horizontal"
+            android:text="전일 대비 증가"
+            android:textSize="15dp"/>
+
+        <TextView
+            android:id="@+id/tv_report_frag_death"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv_report_item_daily"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="0.9"
+            android:gravity="center_horizontal"
+            android:text="사망자"
+            android:textSize="15dp"/>
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_report"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        android:layout_marginBottom="50dp"/>
+        android:layout_marginBottom="50dp"
+        android:layout_below="@id/ll_fragment2"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

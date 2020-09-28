@@ -82,7 +82,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 Picasso.get().load(R.drawable.ic_home_black_24dp).into(mImage);
             }
             else{
-                Picasso.get().load(data.getImage()).into(mImage);
+                Picasso.get().load(data.getImage()).centerCrop().resize(0,75).into(mImage);
             }
             mUrl=data.getUrl();
         }

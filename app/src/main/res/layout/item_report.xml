@@ -11,53 +11,59 @@
         android:layout_height="wrap_content"
         app:cardElevation="2dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4">
 
             <TextView
                 android:id="@+id/tv_report_item_title"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="18dp"
-                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:layout_weight="0.9"
                 android:text="도시 이름"
-                android:textSize="15sp" />
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/tv_report_item_patient"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/tv_report_item_title"
                 android:layout_marginTop="18dp"
                 android:layout_marginLeft="20dp"
-                android:layout_weight="1"
+                android:layout_weight="1.1"
+                android:gravity="center_horizontal"
                 android:text="누적 확진자수"
-                android:textSize="15dp" />
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/tv_report_item_daily"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/tv_report_item_patient"
                 android:layout_marginTop="18dp"
                 android:layout_marginLeft="20dp"
-                android:layout_weight="1"
+                android:layout_weight="1.1"
+                android:gravity="center_horizontal"
                 android:text="전일 대비 증가"
-                android:textSize="15dp"/>
+                android:textSize="20dp"/>
 
             <TextView
                 android:id="@+id/tv_report_item_death"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/tv_report_item_daily"
                 android:layout_marginTop="18dp"
                 android:layout_marginLeft="20dp"
-                android:layout_weight="1"
+                android:layout_weight="0.9"
+                android:gravity="center_horizontal"
                 android:text="사망자"
-                android:textSize="15dp"/>
+                android:textSize="20dp"/>
 
-        </RelativeLayout>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
