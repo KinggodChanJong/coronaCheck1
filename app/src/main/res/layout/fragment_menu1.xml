@@ -1,142 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_title_1"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="확진환자"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="10dp"
-        android:textSize="18dp"
-        />
-    <TextView
-        android:id="@+id/tv_title_2"
-        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4">
+        <TextView
+            android:id="@+id/tv_title_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="확진환자"
+            android:layout_marginTop="3dp"
+            android:textSize="20dp"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/tv_check_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="검사진행"
+            android:layout_marginTop="3dp"
+            android:textSize="20dp"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/tv_safe_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="격리해제"
+            android:layout_marginTop="3dp"
+            android:textSize="20dp"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/tv_die_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="사망자"
+            android:layout_marginTop="3dp"
+            android:textSize="20dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_title_1"
-        android:layout_alignLeft="@+id/tv_title_1"
-        android:layout_marginBottom="5dp"
-        android:text="111111"
-        android:textSize="20dp"
-        />
+        android:orientation="horizontal"
+        android:weightSum="4">
 
-    <TextView
-        android:id="@+id/tv_title_3"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/tv_title_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="111111"
+            android:textSize="20dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_check_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="222222"
+            android:textSize="20dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tv_safe_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="333333"
+            android:textSize="20dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tv_die_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="444444"
+            android:textSize="20dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_title_2"
-        android:layout_alignLeft="@+id/tv_title_2"
-        android:text="3214"
-        android:layout_marginBottom="5dp"
-        android:textSize="10dp" />
+        android:orientation="horizontal"
+        android:weightSum="4">
+        <TextView
+            android:id="@+id/tv_title_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="3214"
+            android:layout_marginBottom="5dp"
+            android:textSize="10dp"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/tv_check_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="3214"
+            android:layout_marginBottom="5dp"
+            android:textSize="10dp"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/tv_safe_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="3214"
+            android:layout_marginBottom="5dp"
+            android:textSize="10dp"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/tv_die_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="3214"
+            android:layout_marginBottom="5dp"
+            android:textSize="10dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
 
 
 
-    <TextView
-        android:id="@+id/tv_check_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="검사진행"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="10dp"
-        android:textSize="18dp"
-        android:layout_toRightOf="@+id/tv_title_1"
-        android:layout_marginLeft="25dp"
-        />
-    <TextView
-        android:id="@+id/tv_check_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_check_1"
-        android:layout_alignLeft="@+id/tv_check_1"
-        android:layout_marginBottom="5dp"
-        android:text="222222"
-        android:textSize="20dp"
-        />
-    <TextView
-        android:id="@+id/tv_check_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_check_2"
-        android:layout_alignLeft="@+id/tv_check_2"
-        android:text="3214"
-        android:layout_marginBottom="5dp"
-        android:textSize="10dp" />
-
-
-
-    <TextView
-        android:id="@+id/tv_safe_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="격리해제"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="10dp"
-        android:textSize="18dp"
-        android:layout_toRightOf="@+id/tv_check_1"
-        android:layout_marginLeft="25dp"
-        />
-
-    <TextView
-        android:id="@+id/tv_safe_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_safe_1"
-        android:layout_alignLeft="@+id/tv_safe_1"
-        android:layout_marginBottom="5dp"
-        android:text="333333"
-        android:textSize="20dp"
-        />
-    <TextView
-        android:id="@+id/tv_safe_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_safe_2"
-        android:layout_alignLeft="@+id/tv_safe_2"
-        android:layout_marginLeft="0dp"
-        android:text="3214"
-        android:layout_marginBottom="5dp"
-        android:textSize="10dp" />
-
-
-
-    <TextView
-        android:id="@+id/tv_die_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="사망자"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="10dp"
-        android:textSize="18dp"
-        android:layout_toRightOf="@+id/tv_safe_1"
-        android:layout_marginLeft="25dp"
-        />
-
-    <TextView
-        android:id="@+id/tv_die_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_safe_1"
-        android:layout_alignLeft="@+id/tv_die_1"
-        android:layout_marginBottom="5dp"
-        android:text="444444"
-        android:textSize="20dp"
-        />
-    <TextView
-        android:id="@+id/tv_die_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_safe_2"
-        android:layout_alignLeft="@+id/tv_die_2"
-        android:layout_marginLeft="0dp"
-        android:text="3214"
-        android:layout_marginBottom="5dp"
-        android:textSize="10dp" />
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/barchart"
@@ -160,4 +152,4 @@
 
 
 
-</RelativeLayout>
+</LinearLayout>
