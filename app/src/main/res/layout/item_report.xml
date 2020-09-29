@@ -6,10 +6,10 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardview_report_item"
-        cardCornerRadius="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="2dp">
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,8 +22,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="18dp"
-                android:gravity="center_horizontal"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_weight="0.9"
                 android:text="도시 이름"
                 android:textSize="20dp" />
@@ -33,10 +34,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/tv_report_item_title"
-                android:layout_marginTop="18dp"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1.1"
-                android:gravity="center_horizontal"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:text="누적 확진자수"
                 android:textSize="20dp" />
 
@@ -45,10 +47,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/tv_report_item_patient"
-                android:layout_marginTop="18dp"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1.1"
-                android:gravity="center_horizontal"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:text="전일 대비 증가"
                 android:textSize="20dp"/>
 
@@ -57,10 +60,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/tv_report_item_daily"
-                android:layout_marginTop="18dp"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="0.9"
-                android:gravity="center_horizontal"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:text="사망자"
                 android:textSize="20dp"/>
 

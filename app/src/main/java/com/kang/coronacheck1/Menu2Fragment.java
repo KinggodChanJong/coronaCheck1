@@ -31,12 +31,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class Menu2Fragment extends Fragment implements View.OnClickListener {
+public class Menu2Fragment extends Fragment{
 
     private static final String TAG = "로그";
     int dfasdf =0;
     ViewGroup viewGroup;
-    private FloatingActionButton fabQrcode;
     MainActivity activity;
     TextView tvex;
 
@@ -74,8 +73,6 @@ public class Menu2Fragment extends Fragment implements View.OnClickListener {
 
         viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_menu2,container,false);
 
-        fabQrcode = (FloatingActionButton)viewGroup.findViewById(R.id.fab);
-        fabQrcode.setOnClickListener(this);
         // 리사이클러뷰 아이템
         recyclerView = viewGroup.findViewById(R.id.recycler_view_report);
         // recyclerView.setHasFixedSize(true);
@@ -88,14 +85,6 @@ public class Menu2Fragment extends Fragment implements View.OnClickListener {
         return viewGroup;
     };
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    @Override
-    public void onClick(View v) {
-        Log.d(TAG, "Menu2Fragment - onClick() called");
-        Intent intent = new Intent(getActivity(), QrcodeActivity.class);
-        startActivity(intent);
-        getActivity().isDestroyed();
-    }
     private void getData(){
         Log.d(TAG, "Menu2Fragment - getData() called");
         Menu2Fragment.NewsJsoup jsoupAsyncTask = new Menu2Fragment.NewsJsoup();

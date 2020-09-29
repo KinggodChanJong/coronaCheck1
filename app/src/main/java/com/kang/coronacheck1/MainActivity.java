@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -17,16 +18,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "로그";
     public static Context mContext;//새로고침을 위한 추가
@@ -38,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private Menu3Fragment menu3Fragment = new Menu3Fragment();
 
     private BottomNavigationView bottomNavigationView;
+    private FloatingActionButton fabQrcode;
 
     //플래그 값 초기화
     private int flag = 0;
@@ -61,8 +69,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         Log.d(TAG, "MainActivity - onCreate() called");
-        TextView hiyo = (TextView)findViewById(R.id.tv_instance);
-        Log.d(TAG, "MainActivity - onCreate() TextView called"+hiyo.getText().toString());
+        TextView mText = (TextView)findViewById(R.id.tv_main_title);
+
+        fabQrcode = (FloatingActionButton)findViewById(R.id.fab);
+        fabQrcode.setOnClickListener(this);
         /**
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Map<String, Object> user = new HashMap<>();
@@ -103,20 +113,34 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.navigation_home: {
                         getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu1Fragment).commitAllowingStateLoss();
+                        mText.setText("코로나 현황");
                         break;
                     }
                     case R.id.navigation_report: {
                         getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu2Fragment).commitAllowingStateLoss();
+                        mText.setText("코로나 도시별 현황");
                         break;
                     }
                     case R.id.navigation_news: {
                         getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu3Fragment).commitAllowingStateLoss();
+                        mText.setText("코로나 TOP10 뉴스");
                         break;
                     }
                 }
                 return true;
             }
         });
+    }
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+            case R.id.fab :
+                Log.d(TAG, "MainActivity fab - onClick() called");
+                Intent intent = new Intent(this, QrcodeActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
     /*
     재시작

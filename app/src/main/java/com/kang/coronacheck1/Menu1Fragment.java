@@ -51,7 +51,7 @@ import java.util.Locale;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-public class Menu1Fragment extends Fragment implements View.OnClickListener {
+public class Menu1Fragment extends Fragment {
 
     private static final String TAG = "로그";
     //크롤링주소
@@ -62,6 +62,10 @@ public class Menu1Fragment extends Fragment implements View.OnClickListener {
     ViewGroup viewGroup;
     private FloatingActionButton fabQrcode;
     MainActivity activity;
+    ArrayList<String> arrayDec= new ArrayList<>();
+
+    BarChart chart;
+    String[] days;
 
     @Override
     public void onAttach(Context context) {
@@ -105,7 +109,7 @@ public class Menu1Fragment extends Fragment implements View.OnClickListener {
         //크롤링
         getWebsite();
         ////////////// 차트
-        BarChart chart = viewGroup.findViewById(R.id.barchart);
+        chart = viewGroup.findViewById(R.id.barchart);
 
         //날짜 배열 선언
         String[] days;
@@ -145,52 +149,10 @@ public class Menu1Fragment extends Fragment implements View.OnClickListener {
         val[6] = val_temp;
         //Log.d("수치값",val[i].toString());
 
-        ArrayList NoOfEmp = new ArrayList();
-        NoOfEmp.add(new BarEntry(val[0], 0));
-        NoOfEmp.add(new BarEntry(val[1], 1));
-        NoOfEmp.add(new BarEntry(val[2], 2));
-        NoOfEmp.add(new BarEntry(val[3], 3));
-        NoOfEmp.add(new BarEntry(val[4], 4));
-        NoOfEmp.add(new BarEntry(val[5], 5));
-        NoOfEmp.add(new BarEntry(val[6], 6));
-
-        BarDataSet bardataset = new BarDataSet(NoOfEmp,"요일별");
-        chart.animateY(5000);
-        XAxis xAxis = chart.getXAxis();
-        YAxis yRAxis = chart.getAxisRight();
-        //가로선 제거
-        //chart.getAxisLeft().setDrawGridLines(false);
-        //세로선 제거
-        chart.getAxisRight().setDrawGridLines(false);
-        chart.getXAxis().setDrawGridLines(false);
-        chart.getLegend().setEnabled(false);
-
-        //요일 아래 나오게
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-
-        //오른쪽 라벨 지우기
-        yRAxis.setDrawLabels(false);
-        yRAxis.setDrawAxisLine(false);
-        yRAxis.setDrawGridLines(false);
-
-        //데이터 셋
-        BarData data = new BarData(days, bardataset);// MPAndroidChart v3.X 오류 발생
-        // bar 차트 색 지정
-        bardataset.setColor(Color.parseColor("#731D5C"));
-        data.setValueTextSize(10f);
-        chart.setData(data);
-
         ///////////////////////////차트 끝
 
 
-
-
         Log.d(TAG, "Menu1Fragment - onCreateView() called");
-
-
-
-        fabQrcode = (FloatingActionButton)viewGroup.findViewById(R.id.fab);
-        fabQrcode.setOnClickListener(this);
 
         getData();
 
@@ -262,14 +224,6 @@ public class Menu1Fragment extends Fragment implements View.OnClickListener {
 
     ;
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    @Override
-    public void onClick(View v) {
-        Log.d(TAG, "Menu1Fragment - onClick() called");
-        Intent intent = new Intent(getActivity(), QrcodeActivity.class);
-        startActivity(intent);
-        getActivity().isDestroyed();
-    }
     private void getData(){
         Log.d(TAG, "Menu1Fragment - getData() called");
         Menu1Fragment.HomeJsoup jsoupAsyncTask = new Menu1Fragment.HomeJsoup();
