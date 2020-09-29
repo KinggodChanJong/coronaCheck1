@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private BottomNavigationView bottomNavigationView;
     private FloatingActionButton fabQrcode;
+    Intent intent;
 
     //플래그 값 초기화
     private int flag = 0;
@@ -94,14 +96,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
 **/
         //임시 세팅 버튼
-        Button web_view = (Button) findViewById(R.id.button);
-        web_view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Setting.class);
-                startActivity(intent);
-            }
-        });
+        ImageButton web_view = (ImageButton) findViewById(R.id.button);
+
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         // 첫화면에 띄워야 할 것들 지정해주기
         getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame,menu1Fragment).commitAllowingStateLoss();
@@ -135,9 +131,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
 
         switch (view.getId()) {
+
             case R.id.fab :
                 Log.d(TAG, "MainActivity fab - onClick() called");
-                Intent intent = new Intent(this, QrcodeActivity.class);
+                intent = new Intent(this, QrcodeActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.button:
+                intent = new Intent(getApplicationContext(), Setting.class);
                 startActivity(intent);
                 break;
         }
