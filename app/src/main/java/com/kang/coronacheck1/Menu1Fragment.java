@@ -49,7 +49,7 @@ import java.util.Locale;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-public class Menu1Fragment extends Fragment implements View.OnClickListener {
+public class Menu1Fragment extends Fragment {
 
     private static final String TAG = "로그";
     private static final String KEY = "1Mj1V%2BMi6sYV7zATIhgaID%2FRscskgIqwqHUZrgykMD8PESuKyZl3HZ7ghLvbWPHupOjEE58NDiaV%2B7UBZMPnmg%3D%3D";
@@ -57,7 +57,6 @@ public class Menu1Fragment extends Fragment implements View.OnClickListener {
     ArrayList<String> listDecNum = new ArrayList<>();
 
     ViewGroup viewGroup;
-    private FloatingActionButton fabQrcode;
     MainActivity activity;
     ArrayList<String> arrayDec= new ArrayList<>();
 
@@ -127,33 +126,16 @@ public class Menu1Fragment extends Fragment implements View.OnClickListener {
         val[6] = val_temp;
         //Log.d("수치값",val[i].toString());
 
-
-
         ///////////////////////////차트 끝
 
 
-
-
         Log.d(TAG, "Menu1Fragment - onCreateView() called");
-
-
-
-        fabQrcode = (FloatingActionButton)viewGroup.findViewById(R.id.fab);
-        fabQrcode.setOnClickListener(this);
 
         getData();
 
         return viewGroup;
     };
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    @Override
-    public void onClick(View v) {
-        Log.d(TAG, "Menu1Fragment - onClick() called");
-        Intent intent = new Intent(getActivity(), QrcodeActivity.class);
-        startActivity(intent);
-        getActivity().isDestroyed();
-    }
     private void getData(){
         Log.d(TAG, "Menu1Fragment - getData() called");
         Menu1Fragment.HomeJsoup jsoupAsyncTask = new Menu1Fragment.HomeJsoup();

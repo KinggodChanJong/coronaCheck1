@@ -29,12 +29,11 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Menu3Fragment extends Fragment implements View.OnClickListener {
+public class Menu3Fragment extends Fragment {
 
     private static final String TAG = "로그";
 
     ViewGroup viewGroup;
-    private FloatingActionButton fabQrcode;
     MainActivity activity;
 
     // 리사이클러뷰 위한 설정
@@ -71,9 +70,6 @@ public class Menu3Fragment extends Fragment implements View.OnClickListener {
 
         viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_menu3,container,false);
 
-        fabQrcode = (FloatingActionButton)viewGroup.findViewById(R.id.fab);
-        fabQrcode.setOnClickListener(this);
-
         // 리사이클러뷰 아이템
         recyclerView = viewGroup.findViewById(R.id.recycler_view_news);
         // recyclerView.setHasFixedSize(true);
@@ -87,14 +83,6 @@ public class Menu3Fragment extends Fragment implements View.OnClickListener {
     };
     // 뉴스 받아오기 위한 핸들러
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
-    @Override
-    public void onClick(View v) {
-        Log.d(TAG, "Menu3Fragment - onClick() called");
-        Intent intent = new Intent(getActivity(), QrcodeActivity.class);
-        startActivity(intent);
-        getActivity().isDestroyed();
-    }
     private void getData(){
         Log.d(TAG, "Menu3Fragment - getData() called");
         NewsJsoup jsoupAsyncTask = new NewsJsoup();
