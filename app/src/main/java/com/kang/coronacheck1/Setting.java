@@ -19,25 +19,25 @@ public class Setting extends AppCompatActivity {
 
         RadioGroup rgFontsize = findViewById(R.id.rg_fontsize);
         RadioGroup rgFontchang = findViewById(R.id.rg_fontchang);
-        FlagVar myApp = (FlagVar) getApplicationContext();
+        //FlagVar myApp = (FlagVar) getApplicationContext();
         rgFontsize.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
                     case R.id.btn_font_small :
-                        myApp.setState(1);
-                        Log.d("로그", String.valueOf(myApp.getState()));
+                        int myApp =FlagVar.setState(1);
+                        //Log.d("로그", String.valueOf(myApp.getState()));
                         ((MainActivity)(MainActivity.mContext)).onResume();
 
                         break;
                     case R.id.btn_font_mid :
-                        myApp.setState(2);
-                        Log.d("로그", String.valueOf(myApp.getState()));
+                        int myApp1 =FlagVar.setState(2);
+                        //Log.d("로그", String.valueOf(myApp.getState()));
                         ((MainActivity)(MainActivity.mContext)).onResume();
                         break;
                     case R.id.btn_font_big :
-                        myApp.setState(3);
-                        Log.d("로그", String.valueOf(myApp.getState()));
+                        int myApp2 = FlagVar.setState(3);
+                        //Log.d("로그", String.valueOf(myApp.getState()));
                         ((MainActivity)(MainActivity.mContext)).onResume();
                         break;
                 }
@@ -49,18 +49,18 @@ public class Setting extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
                     case R.id.btn_font_ya :
-                        myApp.setFontvar(1);
-                        Log.d("로그", String.valueOf(myApp.getFontvar()));
+                        //myApp.setFontvar(1);
+                        //Log.d("로그", String.valueOf(myApp.getFontvar()));
                         ((MainActivity)(MainActivity.mContext)).onResume();
                         break;
                     case R.id.btn_font_nomal :
-                        myApp.setFontvar(2);
-                        Log.d("로그", String.valueOf(myApp.getFontvar()));
+                       // myApp.setFontvar(2);
+                        //Log.d("로그", String.valueOf(myApp.getFontvar()));
                         ((MainActivity)(MainActivity.mContext)).onResume();
                         break;
                     case R.id.btn_font_kor :
-                        myApp.setFontvar(3);
-                        Log.d("로그", String.valueOf(myApp.getFontvar()));
+                        //myApp.setFontvar(3);
+                        //Log.d("로그", String.valueOf(myApp.getFontvar()));
                         ((MainActivity)(MainActivity.mContext)).onResume();
                         break;
                 }

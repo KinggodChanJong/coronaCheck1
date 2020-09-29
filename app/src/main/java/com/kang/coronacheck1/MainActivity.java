@@ -19,11 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
 
@@ -56,11 +52,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mContext = this;
         //플래그 값 받기
-        FlagVar myflag = (FlagVar) getApplicationContext();
+       // FlagVar myflag = (FlagVar) getApplicationContext();
         //폰트변경
-        fontvar = myflag.getFontvar();
+       //fontvar = myflag.getFontvar();
         //텍스트 크기
-        flag = myflag.getState();
+       // flag = myflag.getState();
 
 
 
@@ -131,11 +127,11 @@ public class MainActivity extends AppCompatActivity {
         //화면전환시 받을 값 지정
         mContext = this;
         //플래그 값 받기
-        FlagVar myflag = (FlagVar) getApplicationContext();
+        //FlagVar myflag = (FlagVar) getApplicationContext();
         //폰트변경
-        fontvar = myflag.getFontvar();
+        fontvar = FlagVar.getFontvar();
         //텍스트 크기
-        flag = myflag.getState();
+        flag = FlagVar.getState();
 
         tv_title_1 = findViewById(R.id.tv_title_1);
         tv_title_2 = findViewById(R.id.tv_title_2);

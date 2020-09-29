@@ -24,13 +24,16 @@
         android:layout_height="50dp"
         android:layout_gravity="bottom"
         app:menu="@menu/menu"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:fontFamily="@font/yaregular"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="Button"
+        android:layout_gravity="right"
+        android:fontFamily="@font/yaregular" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

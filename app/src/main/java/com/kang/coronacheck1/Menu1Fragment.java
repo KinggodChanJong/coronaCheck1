@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +30,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -52,17 +54,14 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class Menu1Fragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "로그";
-    private static final String KEY = "1Mj1V%2BMi6sYV7zATIhgaID%2FRscskgIqwqHUZrgykMD8PESuKyZl3HZ7ghLvbWPHupOjEE58NDiaV%2B7UBZMPnmg%3D%3D";
-    private static int day =0;
-    ArrayList<String> listDecNum = new ArrayList<>();
-
+    //크롤링주소
+    private String baseUrl = "https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=%EC%BD%94%EB%A1%9C%EB%82%9819";
+    //확진자 현황
+    private TextView tv_title_2, tv_check_2, tv_safe_2, tv_die_2,tv_title_1, tv_check_1, tv_safe_1,tv_die_1,
+            tv_title_3, tv_check_3, tv_safe_3, tv_die_3;
     ViewGroup viewGroup;
     private FloatingActionButton fabQrcode;
     MainActivity activity;
-    ArrayList<String> arrayDec= new ArrayList<>();
-
-    BarChart chart;
-    String[] days;
 
     @Override
     public void onAttach(Context context) {
@@ -86,11 +85,30 @@ public class Menu1Fragment extends Fragment implements View.OnClickListener {
 
         viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_menu1,container,false);
 
+        ///////확진자 현황 텍스트뷰
+        tv_title_1 = viewGroup.findViewById(R.id. tv_title_1);
+        tv_check_1 = viewGroup.findViewById(R.id.tv_check_1);
+        tv_safe_1 = viewGroup.findViewById(R.id.tv_safe_1);
+        tv_die_1 = viewGroup.findViewById(R.id.tv_die_1);
+        //누적 합계
+        tv_title_2 = viewGroup.findViewById(R.id. tv_title_2);
+        tv_check_2 = viewGroup.findViewById(R.id.tv_check_2);
+        tv_safe_2 = viewGroup.findViewById(R.id.tv_safe_2);
+        tv_die_2 = viewGroup.findViewById(R.id.tv_die_2);
+
+        //오늘 증가량
+        tv_title_3 = viewGroup.findViewById(R.id. tv_title_3);
+        tv_check_3 = viewGroup.findViewById(R.id.tv_check_3);
+        tv_safe_3 = viewGroup.findViewById(R.id.tv_safe_3);
+        tv_die_3 = viewGroup.findViewById(R.id.tv_die_3);
+
+        //크롤링
+        getWebsite();
         ////////////// 차트
-        chart = viewGroup.findViewById(R.id.barchart);
+        BarChart chart = viewGroup.findViewById(R.id.barchart);
 
         //날짜 배열 선언
-
+        String[] days;
         days = new String[7];
 
         //날짜 배열에 담기
@@ -127,7 +145,40 @@ public class Menu1Fragment extends Fragment implements View.OnClickListener {
         val[6] = val_temp;
         //Log.d("수치값",val[i].toString());
 
+        ArrayList NoOfEmp = new ArrayList();
+        NoOfEmp.add(new BarEntry(val[0], 0));
+        NoOfEmp.add(new BarEntry(val[1], 1));
+        NoOfEmp.add(new BarEntry(val[2], 2));
+        NoOfEmp.add(new BarEntry(val[3], 3));
+        NoOfEmp.add(new BarEntry(val[4], 4));
+        NoOfEmp.add(new BarEntry(val[5], 5));
+        NoOfEmp.add(new BarEntry(val[6], 6));
 
+        BarDataSet bardataset = new BarDataSet(NoOfEmp,"요일별");
+        chart.animateY(5000);
+        XAxis xAxis = chart.getXAxis();
+        YAxis yRAxis = chart.getAxisRight();
+        //가로선 제거
+        //chart.getAxisLeft().setDrawGridLines(false);
+        //세로선 제거
+        chart.getAxisRight().setDrawGridLines(false);
+        chart.getXAxis().setDrawGridLines(false);
+        chart.getLegend().setEnabled(false);
+
+        //요일 아래 나오게
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        //오른쪽 라벨 지우기
+        yRAxis.setDrawLabels(false);
+        yRAxis.setDrawAxisLine(false);
+        yRAxis.setDrawGridLines(false);
+
+        //데이터 셋
+        BarData data = new BarData(days, bardataset);// MPAndroidChart v3.X 오류 발생
+        // bar 차트 색 지정
+        bardataset.setColor(Color.parseColor("#731D5C"));
+        data.setValueTextSize(10f);
+        chart.setData(data);
 
         ///////////////////////////차트 끝
 
@@ -144,7 +195,72 @@ public class Menu1Fragment extends Fragment implements View.OnClickListener {
         getData();
 
         return viewGroup;
-    };
+    }
+
+    // 실질적 크롤링
+    private void getWebsite() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<Element> elements = new ArrayList<>();
+                ArrayList<Element> elements2 = new ArrayList<>();
+                StringBuilder[] builder = new StringBuilder[4];
+                StringBuilder[] builder2 = new StringBuilder[4];
+
+                for(int i=0 ; i<4 ; i++){
+                    builder[i] = new StringBuilder();
+                    builder2[i] = new StringBuilder();
+                }
+
+                try{
+                    Document doc = Jsoup.connect(baseUrl).get();
+                    Elements contents1 = doc.select("div.status_info ul li p");
+                    Elements contents2 = doc.select("div.status_info ul em");
+                    //Log.d("로그",contents1.toString());
+                    //Log.d("로그",contents2.text());
+
+
+                    for(Element e : contents1){
+                        elements.add(e);
+                    }
+                    for(Element e : contents2){
+                        elements2.add(e);
+                    }
+
+                    Element[] elementarr = elements.toArray(new Element[]{});
+                    Element[] elementarr2 = elements2.toArray(new Element[]{});
+                   // Log.d("로그2",elementarr2.toString());
+
+                    for(int i=0 ; i<4 ; i++){
+                        String str = elementarr[i].select("p").get(0).text();
+                        String str2 = elementarr2[i].select("em").get(0).text();
+                        //Log.d("로그2",str.toString());
+                        builder[i].append(str);
+                        builder2[i].append(str2);
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                activity.runOnUiThread(() -> {
+                    tv_title_2.setText(builder[0]); //확진환자
+                    tv_check_2.setText(builder[1]); //검사중
+                    tv_safe_2.setText(builder[2]); //격리해제
+                    tv_die_2.setText(builder[3]); //사망자
+
+
+                    tv_title_3.setText(builder2[0]); //확진환자
+                    tv_check_3.setText(builder2[1]); //검사중
+                    tv_safe_3.setText(builder2[2]); //격리해제
+                    tv_die_3.setText(builder2[3]); //사망자
+
+                });
+
+            }
+        }).start();
+    }
+
+    ;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -165,57 +281,13 @@ public class Menu1Fragment extends Fragment implements View.OnClickListener {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                Document doc = Jsoup.connect("https://www.worldometers.info/coronavirus/country/south-korea/").get();
+                Document doc = Jsoup.connect("https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6").get();
                 Handler handler = new Handler(Looper.getMainLooper()); // 객체생성
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        int count = 0;
-                        Elements report_patient = doc.select("div .col-md-12").select("div .newsdate_div").select("div div ul li");
-                        for(int i=0;i<6;i++){
-                            Log.d(TAG, report_patient.get(i).text());
-                            String []decNum =report_patient.get(i).text().split(" ");
-                            listDecNum.add(decNum[0]);
-                        }
-                        Log.d(TAG, listDecNum.toString());
-
-                        ArrayList NoOfEmp = new ArrayList();
-                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(5)), 0));
-                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(4)), 1));
-                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(3)), 2));
-                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(2)), 3));
-                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(1)), 4));
-                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(0)), 5));
- //                       NoOfEmp.add(new BarEntry(125, 6));
-
-                        BarDataSet bardataset = new BarDataSet(NoOfEmp,"요일별");
-                        chart.animateY(3000);
-                        XAxis xAxis = chart.getXAxis();
-                        YAxis yRAxis = chart.getAxisRight();
-
-                        chart.setCameraDistance(20);
-
-                        //가로선 제거
-                        //chart.getAxisLeft().setDrawGridLines(false);
-                        //세로선 제거
-                        chart.getAxisRight().setDrawGridLines(false);
-                        chart.getXAxis().setDrawGridLines(false);
-                        chart.getLegend().setEnabled(false);
-
-                        //요일 아래 나오게
-                        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-
-                        //오른쪽 라벨 지우기
-                        yRAxis.setDrawLabels(false);
-                        yRAxis.setDrawAxisLine(false);
-                        yRAxis.setDrawGridLines(false);
-
-                        //데이터 셋
-                        BarData data = new BarData(days, bardataset);// MPAndroidChart v3.X 오류 발생
-                        // bar 차트 색 지정
-                        bardataset.setColor(Color.parseColor("#731D5C"));
-                        data.setValueTextSize(10f);
-                        chart.setData(data);
+                        Elements report_patient = doc.select("aria-label");
+                        Log.d(TAG, report_patient.text());
 
                     }
                 });
