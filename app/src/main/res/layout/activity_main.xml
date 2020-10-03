@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     tools:context=".MainActivity">
 
     <TextView
@@ -15,7 +16,7 @@
         android:layout_gravity="top"
         android:text="코로나 현황"
         android:textSize="20dp"
-        android:textColor="@color/colorBlack"/>
+        android:textColor="#00cc00"/>
 
     <FrameLayout
         android:id="@+id/layout_main_frame"

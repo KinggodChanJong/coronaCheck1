@@ -5,20 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.preference.Preference;
-import androidx.preference.SwitchPreference;
-import androidx.preference.SwitchPreferenceCompat;
 
-import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
@@ -35,11 +28,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.tsengvn.typekit.TypekitContextWrapper;
 
 import org.w3c.dom.Text;
 
-import java.text.BreakIterator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Menu1Fragment menu1Fragment = new Menu1Fragment();
     private Menu2Fragment menu2Fragment = new Menu2Fragment();
     private Menu3Fragment menu3Fragment = new Menu3Fragment();
+    private Menu4Fragment menu4Fragment = new Menu4Fragment();
 
     private BottomNavigationView bottomNavigationView;
     private FloatingActionButton fabQrcode;
@@ -72,6 +64,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mContext = this;
+        //플래그 값 받기
+       // FlagVar myflag = (FlagVar) getApplicationContext();
+        //폰트변경
+       //fontvar = myflag.getFontvar();
+        //텍스트 크기
+       // flag = myflag.getState();
+
+
 
         Log.d(TAG, "MainActivity - onCreate() called");
 
@@ -142,6 +143,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case R.id.navigation_news: {
                         getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu3Fragment).commitAllowingStateLoss();
                         mText.setText("코로나 TOP10 뉴스");
+                        break;
+                    }
+                    case R.id.navigation_faq:{
+                        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu4Fragment).commitAllowingStateLoss();
+                        mText.setText("코로나 FAQ");
                         break;
                     }
                 }

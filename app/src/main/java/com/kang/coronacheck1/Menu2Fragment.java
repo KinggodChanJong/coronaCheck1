@@ -1,9 +1,7 @@
 package com.kang.coronacheck1;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,13 +13,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.kang.coronacheck1.Adapter.NewsAdapter;
 import com.kang.coronacheck1.Adapter.ReportAdapter;
 
 import org.jsoup.Jsoup;
@@ -34,10 +29,8 @@ import java.util.ArrayList;
 public class Menu2Fragment extends Fragment{
 
     private static final String TAG = "로그";
-    int dfasdf =0;
     ViewGroup viewGroup;
     MainActivity activity;
-    TextView tvex;
 
     // 리사이클러뷰 위한 설정
     RecyclerView.LayoutManager layoutManager;

@@ -2,7 +2,6 @@ package com.kang.coronacheck1;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -51,25 +48,22 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 public class Menu1Fragment extends Fragment {
 
     private static final String TAG = "로그";
-    //크롤링주소
-    private String baseUrl = "https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=%EC%BD%94%EB%A1%9C%EB%82%9819";
-    //확진자 현황
-    private TextView tv_title_2, tv_check_2, tv_safe_2, tv_die_2,tv_title_1, tv_check_1, tv_safe_1,tv_die_1,
-            tv_title_3, tv_check_3, tv_safe_3, tv_die_3;
+
     ViewGroup viewGroup;
-    private FloatingActionButton fabQrcode;
     MainActivity activity;
-    ArrayList<String> arrayDec= new ArrayList<>();
+    ArrayList<String> listDecNum = new ArrayList<>();
+    ArrayList<String> listYesterdayNum= new ArrayList<>();
+    ArrayList<String> listPatientNum = new ArrayList<>();
 
     BarChart chart;
     String[] days;
     private SharedPreferences prefs;
+
+    private TextView tvPatient,tvPatientNum,tvPatientYesterday, tvInspection, tvInspectionNum, tvInspectionYesterday,
+            tvSafe, tvSafeNum, tvSafeYesterday, tvDie, tvDieNum, tvDieYesterday;
 
     @Override
     public void onAttach(Context context) {
@@ -91,192 +85,44 @@ public class Menu1Fragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        Log.d(TAG, "Menu1Fragment - onCreateView() called");
+
         viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_menu1,container,false);
 
-        itemView();
+        init();
+        getData();
 
         return viewGroup;
     }
-    @Override
-    public void onResume() {
-        super.onResume();
-        itemView();
-    }
 
-    private void itemView() {
-        ///////확진자 현황 텍스트뷰
-        tv_title_1 = viewGroup.findViewById(R.id. tv_title_1);
-        tv_check_1 = viewGroup.findViewById(R.id.tv_check_1);
-        tv_safe_1 = viewGroup.findViewById(R.id.tv_safe_1);
-        tv_die_1 = viewGroup.findViewById(R.id.tv_die_1);
-        //누적 합계
-        tv_title_2 = viewGroup.findViewById(R.id. tv_title_2);
-        tv_check_2 = viewGroup.findViewById(R.id.tv_check_2);
-        tv_safe_2 = viewGroup.findViewById(R.id.tv_safe_2);
-        tv_die_2 = viewGroup.findViewById(R.id.tv_die_2);
+    private void init() {
+        Log.d(TAG, "Menu1Fragment - init() called");
 
-        //오늘 증가량
-        tv_title_3 = viewGroup.findViewById(R.id. tv_title_3);
-        tv_check_3 = viewGroup.findViewById(R.id.tv_check_3);
-        tv_safe_3 = viewGroup.findViewById(R.id.tv_safe_3);
-        tv_die_3 = viewGroup.findViewById(R.id.tv_die_3);
-
-        //크롤링
-        getWebsite();
-        ////////////// 차트
         chart = viewGroup.findViewById(R.id.barchart);
-
-        //날짜 배열 선언
-        String[] days;
+        ///////확진자 현황 텍스트뷰
+        tvPatient = viewGroup.findViewById(R.id. tv_home_frag_patient);
+        tvInspection = viewGroup.findViewById(R.id.tv_home_frag_inspection);
+        tvSafe = viewGroup.findViewById(R.id.tv_home_frag_safe);
+        tvDie = viewGroup.findViewById(R.id.tv_home_frag_die);
+        //누적 합계
+        tvPatientNum = viewGroup.findViewById(R.id. tv_home_frag_patient_num);
+        tvInspectionNum = viewGroup.findViewById(R.id.tv_home_frag_inspection_num);
+        tvSafeNum = viewGroup.findViewById(R.id.tv_home_frag_safe_num);
+        tvDieNum = viewGroup.findViewById(R.id.tv_home_frag_die_num);
+        //오늘 증가량
+        tvPatientYesterday = viewGroup.findViewById(R.id. tv_home_frag_patient_yesterday);
+        tvInspectionYesterday = viewGroup.findViewById(R.id.tv_home_frag_inspection_yesterday);
+        tvSafeYesterday = viewGroup.findViewById(R.id.tv_home_frag_safe_yesterday);
+        tvDieYesterday = viewGroup.findViewById(R.id.tv_home_frag_die_yesterday);
+        // 날짜 배열 만들기
         days = new String[7];
-
-        //날짜 배열에 담기
-        int i;
-        for(i=0; i<7;i++){
+        for(int i=6; i>=0;i--){
             Date dDate = new Date();
-            dDate = new Date(dDate.getTime()+(1000*60*60*24*-1)*i);
+            dDate = new Date(dDate.getTime()+(1000*60*60*24*-1)*(6-i));
             SimpleDateFormat dSdf = new SimpleDateFormat("MM/dd", Locale.KOREA);
             days[i] = dSdf.format(dDate);
         }
-
-        // 날짜 배열 순서 역으로 뒤집기
-        for(i=0; i<3;i++){
-            String temp;
-            temp = days[6-i];
-            days[6-i] = days[i];
-            days[i] = temp;
-        }
-
-        //데이터값 지정,배열 선언
-        Float[] val ;
-        val = new Float[]{113f,153f,126f,110f,82f,70f,61f};
-
-        //확진자 값 받을 변수
-        String vl = "51";
-        //큐 역핳
-        Float val_temp,  val_temp2 ;
-        val_temp = Float.valueOf(vl);
-        val_temp2 = 1f;
-        for(i=0; i<6;i++){
-            val_temp2= val[i];
-            val[i] = val[i+1];
-        }
-        val[6] = val_temp;
-        //Log.d("수치값",val[i].toString());
-
-        ///////////////////////////차트 끝
-
-        //// 텍스트 변경
-        int flagVar = FlagVar.getState();
-        prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        boolean font =prefs.getBoolean("fontsize",false);
-        Log.d("로그" , String.valueOf(flagVar));
-        Log.d("로그" , String.valueOf(flagVar));
-        if(font == false){
-            tv_title_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_title_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_title_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
-
-            tv_check_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_check_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_check_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
-
-            tv_safe_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_safe_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_safe_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
-
-            tv_die_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_die_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_die_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
-        }
-        else if(font == true){
-            tv_title_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-            tv_title_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-            tv_title_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-
-            tv_check_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-            tv_check_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-            tv_check_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-
-            tv_safe_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-            tv_safe_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-            tv_safe_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-
-            tv_die_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-            tv_die_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-            tv_die_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-        }
-
-
-        Log.d(TAG, "Menu1Fragment - onCreateView() called");
-
-        getData();
     }
-
-    // 실질적 크롤링
-    private void getWebsite() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ArrayList<Element> elements = new ArrayList<>();
-                ArrayList<Element> elements2 = new ArrayList<>();
-                StringBuilder[] builder = new StringBuilder[4];
-                StringBuilder[] builder2 = new StringBuilder[4];
-
-                for(int i=0 ; i<4 ; i++){
-                    builder[i] = new StringBuilder();
-                    builder2[i] = new StringBuilder();
-                }
-
-                try{
-                    Document doc = Jsoup.connect(baseUrl).get();
-                    Elements contents1 = doc.select("div.status_info ul li p");
-                    Elements contents2 = doc.select("div.status_info ul em");
-                    //Log.d("로그",contents1.toString());
-                    //Log.d("로그",contents2.text());
-
-
-                    for(Element e : contents1){
-                        elements.add(e);
-                    }
-                    for(Element e : contents2){
-                        elements2.add(e);
-                    }
-
-                    Element[] elementarr = elements.toArray(new Element[]{});
-                    Element[] elementarr2 = elements2.toArray(new Element[]{});
-                   // Log.d("로그2",elementarr2.toString());
-
-                    for(int i=0 ; i<4 ; i++){
-                        String str = elementarr[i].select("p").get(0).text();
-                        String str2 = elementarr2[i].select("em").get(0).text();
-                        //Log.d("로그2",str.toString());
-                        builder[i].append(str);
-                        builder2[i].append(str2);
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                activity.runOnUiThread(() -> {
-                    tv_title_2.setText(builder[0]); //확진환자
-                    tv_check_2.setText(builder[1]); //검사중
-                    tv_safe_2.setText(builder[2]); //격리해제
-                    tv_die_2.setText(builder[3]); //사망자
-
-
-                    tv_title_3.setText(builder2[0]); //확진환자
-                    tv_check_3.setText(builder2[1]); //검사중
-                    tv_safe_3.setText(builder2[2]); //격리해제
-                    tv_die_3.setText(builder2[3]); //사망자
-
-                });
-
-            }
-        }).start();
-    }
-
-    ;
 
     private void getData(){
         Log.d(TAG, "Menu1Fragment - getData() called");
@@ -289,13 +135,74 @@ public class Menu1Fragment extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                Document doc = Jsoup.connect("https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6").get();
+                Document doc = Jsoup.connect("https://www.worldometers.info/coronavirus/country/south-korea/").get();
+                Document doc1 = Jsoup.connect("https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=%EC%BD%94%EB%A1%9C%EB%82%9819").get();
+
                 Handler handler = new Handler(Looper.getMainLooper()); // 객체생성
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        Elements report_patient = doc.select("aria-label");
-                        Log.d(TAG, report_patient.text());
+                        // 확진자 수 크롤링
+                        Elements report_today_patient = doc1.select("div.status_info").select("ul li p");
+                        Elements report_yesterday_patient = doc1.select("div.status_info ul em");
+
+                        for(int i =0;i<4;i++){
+                            listPatientNum.add(report_today_patient.get(i).text());
+                            listYesterdayNum.add(report_yesterday_patient.get(i).text());
+                        }
+
+                        tvPatientNum.setText(listPatientNum.get(0));
+                        tvInspectionNum.setText(listPatientNum.get(1));
+                        tvSafeNum.setText(listPatientNum.get(2));
+                        tvDieNum.setText(listPatientNum.get(3));
+
+                        tvPatientYesterday.setText(listYesterdayNum.get(0));
+                        tvInspectionYesterday.setText(listYesterdayNum.get(1));
+                        tvSafeYesterday.setText(listYesterdayNum.get(2));
+                        tvDieYesterday.setText(listYesterdayNum.get(3));
+                        // 도표에 넣을 환자 수 크롤링
+                        Elements report_patient = doc.select("div .col-md-12").select("div .newsdate_div").select("div div ul li");
+                        for(int i=0;i<6;i++){
+                            Log.d(TAG, report_patient.get(i).text());
+                            String []decNum =report_patient.get(i).text().split(" ");
+                            listDecNum.add(decNum[0]);
+                        }
+
+                        ArrayList NoOfEmp = new ArrayList();
+                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(5)), 0));
+                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(4)), 1));
+                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(3)), 2));
+                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(2)), 3));
+                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(1)), 4));
+                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(0)), 5));
+                        NoOfEmp.add(new BarEntry(Float.parseFloat(listYesterdayNum.get(0)), 6));
+
+                        BarDataSet bardataset = new BarDataSet(NoOfEmp,"요일별");
+                        chart.animateY(3000);
+                        XAxis xAxis = chart.getXAxis();
+                        YAxis yRAxis = chart.getAxisRight();
+
+                        chart.setCameraDistance(20);
+
+                        //세로선 제거
+                        chart.getAxisRight().setDrawGridLines(false);
+                        chart.getXAxis().setDrawGridLines(false);
+                        chart.getLegend().setEnabled(false);
+
+                        //요일 아래 나오게
+                        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+                        //오른쪽 라벨 지우기
+                        yRAxis.setDrawLabels(false);
+                        yRAxis.setDrawAxisLine(false);
+                        yRAxis.setDrawGridLines(false);
+
+                        //데이터 셋
+                        BarData data = new BarData(days, bardataset);// MPAndroidChart v3.X 오류 발생
+                        // bar 차트 색 지정
+                        bardataset.setColor(Color.parseColor("#731D5C"));
+                        data.setValueTextSize(10f);
+                        chart.setData(data);
 
                     }
                 });
@@ -304,8 +211,5 @@ public class Menu1Fragment extends Fragment {
             }
             return null;
         }
-
     }
-
-
 }

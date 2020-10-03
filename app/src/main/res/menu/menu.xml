@@ -12,6 +12,9 @@
         android:id="@+id/navigation_news"
         android:icon="@mipmap/ic_launcher"
         android:title="News"/>
-
+    <item
+        android:id="@+id/navigation_faq"
+        android:icon="@drawable/ic_baseline_question_answer_24"
+        android:title="FAQ"/>
 
 </menu>
