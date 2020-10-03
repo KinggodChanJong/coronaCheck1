@@ -27,18 +27,18 @@ public class Setting extends AppCompatActivity {
                     case R.id.btn_font_small :
                         int myApp =FlagVar.setState(1);
                         //Log.d("로그", String.valueOf(myApp.getState()));
-                        ((MainActivity)(MainActivity.mContext)).onResume();
+                     //   ((MainActivity)(MainActivity.mContext)).onResume();
 
                         break;
                     case R.id.btn_font_mid :
                         int myApp1 =FlagVar.setState(2);
                         //Log.d("로그", String.valueOf(myApp.getState()));
-                        ((MainActivity)(MainActivity.mContext)).onResume();
+                      //  ((MainActivity)(MainActivity.mContext)).onResume();
                         break;
                     case R.id.btn_font_big :
                         int myApp2 = FlagVar.setState(3);
                         //Log.d("로그", String.valueOf(myApp.getState()));
-                        ((MainActivity)(MainActivity.mContext)).onResume();
+                     //   ((MainActivity)(MainActivity.mContext)).onResume();
                         break;
                 }
             }
@@ -51,17 +51,17 @@ public class Setting extends AppCompatActivity {
                     case R.id.btn_font_ya :
                         //myApp.setFontvar(1);
                         //Log.d("로그", String.valueOf(myApp.getFontvar()));
-                        ((MainActivity)(MainActivity.mContext)).onResume();
+                      //  ((MainActivity)(MainActivity.mContext)).onResume();
                         break;
                     case R.id.btn_font_nomal :
                        // myApp.setFontvar(2);
                         //Log.d("로그", String.valueOf(myApp.getFontvar()));
-                        ((MainActivity)(MainActivity.mContext)).onResume();
+                        //((MainActivity)(MainActivity.mContext)).onResume();
                         break;
                     case R.id.btn_font_kor :
                         //myApp.setFontvar(3);
                         //Log.d("로그", String.valueOf(myApp.getFontvar()));
-                        ((MainActivity)(MainActivity.mContext)).onResume();
+                        //((MainActivity)(MainActivity.mContext)).onResume();
                         break;
                 }
             }

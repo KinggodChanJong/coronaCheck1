@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,35 +16,36 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kang.coronacheck1.Adapter.ReportAdapter;
+import com.kang.coronacheck1.Adapter.NewsAdapter;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
-
-public class Menu2Fragment extends Fragment{
+public class Menu4Fragment extends Fragment {
 
     private static final String TAG = "로그";
+
     ViewGroup viewGroup;
     MainActivity activity;
 
     // 리사이클러뷰 위한 설정
     RecyclerView.LayoutManager layoutManager;
     RecyclerView recyclerView;
-    ReportAdapter adapter;
+    NewsAdapter adapter;
 
     ArrayList<String> listTitle = new ArrayList<>();
-    ArrayList<String> listPatient = new ArrayList<>();
-    ArrayList<String> listDaily = new ArrayList<>();
-    ArrayList<String> listDeath = new ArrayList<>();
+    ArrayList<String> listName = new ArrayList<>();
+    ArrayList<String> listImageUrl = new ArrayList<>();
+    ArrayList<String> listUrl = new ArrayList<>();
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Log.d(TAG, "Menu2Fragment - onAttach() called");
+        Log.d(TAG, "Menu4Fragment - onAttach() called");
         //이 메소드가 호출될떄는 프래그먼트가 엑티비티위에 올라와있는거니깐 getActivity메소드로 엑티비티참조가능
         activity = (MainActivity) getActivity();
     }
@@ -53,7 +53,7 @@ public class Menu2Fragment extends Fragment{
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(TAG, "Menu2Fragment - onDetach() called");
+        Log.d(TAG, "Menu4Fragment - onDetach() called");
         //이제 더이상 엑티비티 참조가 안됨
         activity = null;
     }
@@ -62,25 +62,26 @@ public class Menu2Fragment extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        Log.d(TAG, "Menu2Fragment - onCreateView() called");
+        Log.d(TAG, "Menu4Fragment - onCreateView() called");
 
-        viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_menu2,container,false);
+        viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_menu4,container,false);
 
         // 리사이클러뷰 아이템
-        recyclerView = viewGroup.findViewById(R.id.recycler_view_report);
+        recyclerView = viewGroup.findViewById(R.id.recycler_view_faq);
         // recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new ReportAdapter();
+        adapter = new NewsAdapter();
         recyclerView.setAdapter(adapter);
         getData();
 
         return viewGroup;
     };
+    // 뉴스 받아오기 위한 핸들러
 
     private void getData(){
-        Log.d(TAG, "Menu2Fragment - getData() called");
-        Menu2Fragment.NewsJsoup jsoupAsyncTask = new Menu2Fragment.NewsJsoup();
+        Log.d(TAG, "Menu4Fragment - getData() called");
+        Menu4Fragment.NewsJsoup jsoupAsyncTask = new Menu4Fragment.NewsJsoup();
         jsoupAsyncTask.execute();
     }
 
@@ -89,40 +90,40 @@ public class Menu2Fragment extends Fragment{
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                Document doc = Jsoup.connect("http://ncov.mohw.go.kr").get();
+                Document doc = Jsoup.connect("https://search.naver.com/search.naver?where=news&query=%EC%BD%94%EB%A1%9C%EB%82%98%20%EB%89%B4%EC%8A%A4&sm=tab_srt&sort=0&photo=0&field=0&reporter_article=&pd=0&ds=&de=&docid=&nso=so%3Ar%2Cp%3Aall%2Ca%3Aall&mynews=0&refresh_start=0&related=0").get();
                 Handler handler = new Handler(Looper.getMainLooper()); // 객체생성
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
                         int count=0;
-                        Elements report_patient = doc.select("div").select("#main_maplayout").select(".num");
-                        Elements report_title = doc.select("div").select("#main_maplayout").select(".name");
-                        Elements report_daily = doc.select("div").select("#main_maplayout").select(".before");
+                        for(int i =1;i<50;i++){
+                            Elements news_title = doc.select("#sp_nws"+i).select("dt [title]");
+                            if(news_title.isEmpty()){
+                                continue;
+                            }
+                            count++;
+                            Elements news_contents = doc.select("#sp_nws"+i).select("dd").not(".txt_inline");
+                            Elements news_image = doc.select("#sp_nws"+i).select("img");
+                            Elements news_url =doc.select("#sp_nws"+i).select("a");
 
-                        Log.d(TAG, report_title.text());
-                        Log.d(TAG, report_patient.text());
-                        Log.d(TAG, report_daily.text());
+                            Log.d(TAG, news_url.attr("href"));
+                            listTitle.add(news_title.text());
+                            listName.add(news_contents.text());
+                            listImageUrl.add(news_image.attr("src"));
+                            listUrl.add(news_url.attr("href"));
 
-
-                        for(int i =0 ; i<18;i++){
-                            Elements report_death = doc.select("div").select("#map_city"+(i+1)).select(".mapview").select(".num");
-                            Log.d(TAG, report_death.text());
-                            ReportItem data = new ReportItem();
-                            listPatient.add(report_patient.get(i).text());
-                            listTitle.add(report_title.get(i).text());
-                            String deleteString = report_daily.get(i).text().replace("(","");
-                            deleteString = deleteString.replace(")", "");
-                            listDaily.add(deleteString);
-                            listDeath.add(report_death.get(3).text());
-
+                            if(count ==10){
+                                break;
+                            }
+                        }
+                        for (int i = 0; i < 10 ; i++) {
+                            NewsItem data = new NewsItem();
                             data.setTitle(listTitle.get(i));
-                            data.setPatient(listPatient.get(i));
-                            data.setDaily(listDaily.get(i));
-                            data.setDeath(listDeath.get(i));
+                            data.setImage(listImageUrl.get(i));
+                            data.setContents(listName.get(i));
+                            data.setUrl(listUrl.get(i));
                             adapter.addItem(data);
                         }
-                        Log.d(TAG, listPatient.toString());
-                        // Log.d(TAG, dfdf);
                         adapter.notifyDataSetChanged();
                     }
                 });
@@ -132,5 +133,4 @@ public class Menu2Fragment extends Fragment{
             return null;
         }
     }
-
 }

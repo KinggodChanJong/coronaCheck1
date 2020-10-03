@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Menu1Fragment menu1Fragment = new Menu1Fragment();
     private Menu2Fragment menu2Fragment = new Menu2Fragment();
     private Menu3Fragment menu3Fragment = new Menu3Fragment();
+    private Menu4Fragment menu4Fragment = new Menu4Fragment();
 
     private BottomNavigationView bottomNavigationView;
     private FloatingActionButton fabQrcode;
@@ -72,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Log.d(TAG, "MainActivity - onCreate() called");
         TextView mText = (TextView)findViewById(R.id.tv_main_title);
-
         fabQrcode = (FloatingActionButton)findViewById(R.id.fab);
         fabQrcode.setOnClickListener(this);
         /**
@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 **/
         //임시 세팅 버튼
         ImageButton web_view = (ImageButton) findViewById(R.id.button);
+        web_view.setOnClickListener(this);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         // 첫화면에 띄워야 할 것들 지정해주기
@@ -122,6 +123,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         mText.setText("코로나 TOP10 뉴스");
                         break;
                     }
+                    case R.id.navigation_faq:{
+                        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu4Fragment).commitAllowingStateLoss();
+                        mText.setText("코로나 FAQ");
+                        break;
+                    }
                 }
                 return true;
             }
@@ -138,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.button:
+                Log.d(TAG, "MainActivity button - onClick() called");
                 intent = new Intent(getApplicationContext(), Setting.class);
                 startActivity(intent);
                 break;
@@ -146,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /*
     재시작
     */
+    /**
     @Override
     protected void onResume() {
         super.onResume();
@@ -234,34 +242,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-
-        bottomNavigationView = findViewById(R.id.bottom_navigation_view);
-        // 첫화면에 띄워야 할 것들 지정해주기
-        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame,menu1Fragment).commitAllowingStateLoss();
-        //바텀 네비게이션뷰 안의 아이템들 설정
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                switch (item.getItemId()) {
-                    case R.id.navigation_home: {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu1Fragment).commitAllowingStateLoss();
-                        break;
-                    }
-                    case R.id.navigation_report: {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu2Fragment).commitAllowingStateLoss();
-                        break;
-                    }
-                    case R.id.navigation_news: {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu3Fragment).commitAllowingStateLoss();
-                        break;
-                    }
-                }
-                return true;
-            }
-        });
-    }
-
     //폰트 전역 변경
     public void setGlobalFont(View view) {
         if(view != null) {
@@ -280,5 +260,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     //////////////////////////////////////
-
+**/
 }

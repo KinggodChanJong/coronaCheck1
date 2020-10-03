@@ -11,7 +11,7 @@
         android:orientation="horizontal"
         android:weightSum="4">
         <TextView
-            android:id="@+id/tv_title_1"
+            android:id="@+id/tv_home_frag_patient"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="확진환자"
@@ -20,7 +20,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/yaregular"/>
         <TextView
-            android:id="@+id/tv_check_1"
+            android:id="@+id/tv_home_frag_inspection"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="검사진행"
@@ -28,7 +28,7 @@
             android:textSize="20dp"
             android:layout_weight="1"/>
         <TextView
-            android:id="@+id/tv_safe_1"
+            android:id="@+id/tv_home_frag_safe"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="격리해제"
@@ -36,7 +36,7 @@
             android:textSize="20dp"
             android:layout_weight="1" />
         <TextView
-            android:id="@+id/tv_die_1"
+            android:id="@+id/tv_home_frag_die"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="사망자"
@@ -50,36 +50,32 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="4">
-
         <TextView
-            android:id="@+id/tv_title_2"
+            android:id="@+id/tv_home_frag_patient_num"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:text="111111"
             android:textSize="20dp"
             android:layout_weight="1" />
-
         <TextView
-            android:id="@+id/tv_check_2"
+            android:id="@+id/tv_home_frag_inspection_num"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:text="222222"
             android:textSize="20dp"
             android:layout_weight="1"/>
-
         <TextView
-            android:id="@+id/tv_safe_2"
+            android:id="@+id/tv_home_frag_safe_num"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:text="333333"
             android:textSize="20dp"
             android:layout_weight="1"/>
-
         <TextView
-            android:id="@+id/tv_die_2"
+            android:id="@+id/tv_home_frag_die_num"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
@@ -94,7 +90,7 @@
         android:orientation="horizontal"
         android:weightSum="4">
         <TextView
-            android:id="@+id/tv_title_3"
+            android:id="@+id/tv_home_frag_patient_yesterday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="3214"
@@ -102,7 +98,7 @@
             android:textSize="10dp"
             android:layout_weight="1"/>
         <TextView
-            android:id="@+id/tv_check_3"
+            android:id="@+id/tv_home_frag_inspection_yesterday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="3214"
@@ -110,7 +106,7 @@
             android:textSize="10dp"
             android:layout_weight="1"/>
         <TextView
-            android:id="@+id/tv_safe_3"
+            android:id="@+id/tv_home_frag_safe_yesterday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="3214"
@@ -118,26 +114,21 @@
             android:textSize="10dp"
             android:layout_weight="1"/>
         <TextView
-            android:id="@+id/tv_die_3"
+            android:id="@+id/tv_home_frag_die_yesterday"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="3214"
             android:layout_marginBottom="5dp"
             android:textSize="10dp"
             android:layout_weight="1"/>
-
     </LinearLayout>
-
-
-
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/barchart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tv_title_3"
+        android:layout_below="@id/tv_home_frag_inspection_yesterday"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="50dp"
-        />
+        android:layout_marginBottom="50dp" />
 
 </LinearLayout>
