@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,8 @@ public class Menu2Fragment extends Fragment{
     private static final String TAG = "로그";
     ViewGroup viewGroup;
     MainActivity activity;
+    TextView mtitle,mPatient,mDaily,mDeath;
+
 
     // 리사이클러뷰 위한 설정
     RecyclerView.LayoutManager layoutManager;
@@ -68,7 +71,7 @@ public class Menu2Fragment extends Fragment{
 
         //리사이클러뷰 아이템
         itemView();
-
+        getData();
         return viewGroup;
     }
 
@@ -76,9 +79,29 @@ public class Menu2Fragment extends Fragment{
     public void onResume() {
         super.onResume();
         itemView();
+        getData();
     }
 
     private void itemView() {
+        //텍스트 크기 지정
+        mtitle = viewGroup.findViewById(R.id.tv_report_frag_title);
+        mPatient = viewGroup.findViewById(R.id.tv_report_frag_patient);
+        mDaily  = viewGroup.findViewById(R.id.tv_report_frag_daily);
+        mDeath = viewGroup.findViewById(R.id.tv_report_frag_death);
+
+        int flagVar = FlagVar.getState();
+        if(flagVar == 1) {
+            ///////확진자 현황 텍스트뷰
+            mtitle.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+            mPatient.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+            mDaily.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+            mDeath.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+        }else if(flagVar == 2){
+            mtitle.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 19);
+            mPatient.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 19);
+            mDaily.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+            mDeath.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 19);
+        }
         // 리사이클러뷰 아이템
         recyclerView = viewGroup.findViewById(R.id.recycler_view_report);
         // recyclerView.setHasFixedSize(true);
@@ -86,8 +109,6 @@ public class Menu2Fragment extends Fragment{
         recyclerView.setLayoutManager(layoutManager);
         adapter = new ReportAdapter();
         recyclerView.setAdapter(adapter);
-        getData();
-
     }
 
     private void getData(){

@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.preference.PreferenceManager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.content.Intent;
@@ -28,6 +30,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.tsengvn.typekit.TypekitContextWrapper;
 
 import org.w3c.dom.Text;
 
@@ -119,8 +122,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-
-
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         // 첫화면에 띄워야 할 것들 지정해주기
         getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame,menu1Fragment).commitAllowingStateLoss();
@@ -157,18 +158,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void init() {
-        tv_title_1 = findViewById(R.id.tv_title_1);
-        tv_title_2 = findViewById(R.id.tv_title_2);
-        tv_title_3 = findViewById(R.id.tv_title_3);
-        tv_check_1 = findViewById(R.id.tv_check_1);
-        tv_check_2 = findViewById(R.id.tv_check_2);
-        tv_check_3 = findViewById(R.id.tv_check_3);
-        tv_safe_1 = findViewById(R.id.tv_safe_1);
-        tv_safe_2 = findViewById(R.id.tv_safe_2);
-        tv_safe_3 = findViewById(R.id.tv_safe_3);
-        tv_die_1 = findViewById(R.id.tv_die_1);
-        tv_die_2 = findViewById(R.id.tv_die_2);
-        tv_die_3 = findViewById(R.id.tv_die_3);
+        tv_title_1 =findViewById(R.id. tv_home_frag_patient);
+        tv_check_1 = findViewById(R.id.tv_home_frag_inspection);
+        tv_safe_1 = findViewById(R.id.tv_home_frag_safe);
+        tv_die_1 = findViewById(R.id.tv_home_frag_die);
+        //누적 합계
+        tv_title_2 = findViewById(R.id. tv_home_frag_patient_num);
+        tv_check_2 = findViewById(R.id.tv_home_frag_inspection_num);
+        tv_safe_2 = findViewById(R.id.tv_home_frag_safe_num);
+        tv_die_2 = findViewById(R.id.tv_home_frag_die_num);
+        //오늘 증가량
+        tv_title_3 = findViewById(R.id. tv_home_frag_patient_yesterday);
+        tv_check_3 = findViewById(R.id.tv_home_frag_inspection_yesterday);
+        tv_safe_3 = findViewById(R.id.tv_home_frag_safe_yesterday);
+        tv_die_3 = findViewById(R.id.tv_home_frag_die_yesterday);
 
         if(flag == 1){
             Log.d(TAG,"폰트사이즈 받았습니다.");
@@ -255,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //flag = FlagVar.getState();
         //Log.d(TAG, "뒷단 flag"+String.valueOf(flag));
 
-        //init();
+        init();
 
     }
 

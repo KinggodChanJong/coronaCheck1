@@ -2,6 +2,7 @@ package com.kang.coronacheck1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -94,6 +97,13 @@ public class Menu1Fragment extends Fragment {
 
         return viewGroup;
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        init();
+        getData();
+    }
+
 
     private void init() {
         Log.d(TAG, "Menu1Fragment - init() called");
@@ -114,6 +124,46 @@ public class Menu1Fragment extends Fragment {
         tvInspectionYesterday = viewGroup.findViewById(R.id.tv_home_frag_inspection_yesterday);
         tvSafeYesterday = viewGroup.findViewById(R.id.tv_home_frag_safe_yesterday);
         tvDieYesterday = viewGroup.findViewById(R.id.tv_home_frag_die_yesterday);
+        //// 텍스트 변경
+        int flagVar = FlagVar.getState();
+        Log.d("로그" , String.valueOf(flagVar));
+        Log.d("로그" , String.valueOf(flagVar));
+        if(flagVar == 1){
+            ///////확진자 현황 텍스트뷰
+            tvPatient.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            tvInspection.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            tvSafe.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            tvDie.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            //누적 합계
+            tvPatientNum.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            tvInspectionNum.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            tvSafeNum.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            tvDieNum.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            //오늘 증가량
+            tvPatientYesterday.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+            tvInspectionYesterday.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+            tvSafeYesterday.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+            tvDieYesterday.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+        }
+        else if(flagVar == 2){
+            ///////확진자 현황 텍스트뷰
+            tvPatient.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tvInspection.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tvSafe.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tvDie.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            //누적 합계
+            tvPatientNum.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tvInspectionNum.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tvSafeNum.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tvDieNum.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            //오늘 증가량
+            tvPatientYesterday.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+            tvInspectionYesterday.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+            tvSafeYesterday.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+            tvDieYesterday.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+        }
+        Log.d(TAG, "Menu1Fragment - onCreateView() called");
+
         // 날짜 배열 만들기
         days = new String[7];
         for(int i=6; i>=0;i--){
@@ -122,6 +172,8 @@ public class Menu1Fragment extends Fragment {
             SimpleDateFormat dSdf = new SimpleDateFormat("MM/dd", Locale.KOREA);
             days[i] = dSdf.format(dDate);
         }
+
+
     }
 
     private void getData(){
