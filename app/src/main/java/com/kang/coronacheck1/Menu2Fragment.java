@@ -73,6 +73,19 @@ public class Menu2Fragment extends Fragment{
 
         viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_menu2,container,false);
 
+        //리사이클러뷰 아이템
+        itemView();
+
+        return viewGroup;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        itemView();
+    }
+
+    private void itemView() {
         // 리사이클러뷰 아이템
         recyclerView = viewGroup.findViewById(R.id.recycler_view_report);
         // recyclerView.setHasFixedSize(true);
@@ -82,8 +95,7 @@ public class Menu2Fragment extends Fragment{
         recyclerView.setAdapter(adapter);
         getData();
 
-        return viewGroup;
-    };
+    }
 
     private void getData(){
         Log.d(TAG, "Menu2Fragment - getData() called");
@@ -139,5 +151,6 @@ public class Menu2Fragment extends Fragment{
             return null;
         }
     }
+
 
 }

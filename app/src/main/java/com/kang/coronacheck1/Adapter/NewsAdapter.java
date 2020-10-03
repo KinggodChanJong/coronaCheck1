@@ -2,6 +2,8 @@ package com.kang.coronacheck1.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kang.coronacheck1.FlagVar;
 import com.kang.coronacheck1.NewsItem;
 import com.kang.coronacheck1.NewsWebViewActivity;
 import com.kang.coronacheck1.R;
@@ -38,6 +41,20 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull NewsAdapter.ViewHolder viewHolder, int i) {
         viewHolder.onBind(listData.get(i));
+        /////텍스트 크기
+        int flagVar = FlagVar.getState();
+        Log.d("로그" , String.valueOf(flagVar));
+            if (flagVar == 1){
+                TextView title = viewHolder.mTitle;
+                title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+                TextView contents = viewHolder.mContents;
+                contents.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+        }else if (flagVar == 2){
+            TextView title = viewHolder.mTitle;
+            title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            TextView contents = viewHolder.mContents;
+            contents.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+        }
     }
     @Override
     public int getItemCount() {

@@ -32,7 +32,7 @@
         app:backgroundTint="#00ffffff"
         app:borderWidth="0dp"
         app:elevation="0dp"
-        android:src="@drawable/ic_home_black_30dp"/>
+        android:src="@drawable/qrcodenocir"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
@@ -42,13 +42,13 @@
         app:menu="@menu/menu"
         tools:ignore="MissingConstraints" />
 
-    <ImageButton
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        android:layout_gravity="right"
-        android:fontFamily="@font/yaregular" />
-
+    <Button
+        android:id="@+id/btn_setting"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/settingbtn"
+        android:layout_gravity="right" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

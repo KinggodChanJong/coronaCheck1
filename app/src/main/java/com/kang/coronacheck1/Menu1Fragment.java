@@ -2,6 +2,7 @@ package com.kang.coronacheck1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -66,6 +69,7 @@ public class Menu1Fragment extends Fragment {
 
     BarChart chart;
     String[] days;
+    private SharedPreferences prefs;
 
     @Override
     public void onAttach(Context context) {
@@ -89,6 +93,17 @@ public class Menu1Fragment extends Fragment {
 
         viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_menu1,container,false);
 
+        itemView();
+
+        return viewGroup;
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        itemView();
+    }
+
+    private void itemView() {
         ///////확진자 현황 텍스트뷰
         tv_title_1 = viewGroup.findViewById(R.id. tv_title_1);
         tv_check_1 = viewGroup.findViewById(R.id.tv_check_1);
@@ -151,12 +166,51 @@ public class Menu1Fragment extends Fragment {
 
         ///////////////////////////차트 끝
 
+        //// 텍스트 변경
+        int flagVar = FlagVar.getState();
+        prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        boolean font =prefs.getBoolean("fontsize",false);
+        Log.d("로그" , String.valueOf(flagVar));
+        Log.d("로그" , String.valueOf(flagVar));
+        if(font == false){
+            tv_title_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            tv_title_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            tv_title_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+
+            tv_check_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            tv_check_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            tv_check_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+
+            tv_safe_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            tv_safe_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            tv_safe_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+
+            tv_die_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            tv_die_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            tv_die_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+        }
+        else if(font == true){
+            tv_title_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tv_title_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tv_title_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+
+            tv_check_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tv_check_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tv_check_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+
+            tv_safe_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tv_safe_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tv_safe_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+
+            tv_die_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tv_die_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tv_die_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+        }
+
 
         Log.d(TAG, "Menu1Fragment - onCreateView() called");
 
         getData();
-
-        return viewGroup;
     }
 
     // 실질적 크롤링
@@ -250,5 +304,8 @@ public class Menu1Fragment extends Fragment {
             }
             return null;
         }
+
     }
+
+
 }

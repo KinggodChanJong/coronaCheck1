@@ -5,13 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.preference.Preference;
+import androidx.preference.SwitchPreference;
+import androidx.preference.SwitchPreferenceCompat;
 
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
@@ -28,9 +35,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.tsengvn.typekit.TypekitContextWrapper;
 
 import org.w3c.dom.Text;
 
+import java.text.BreakIterator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,27 +59,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Intent intent;
 
     //플래그 값 초기화
-    private int flag = 0;
-    private int fontvar = 0;
+    private int flag = FlagVar.getState();
+    SharedPreferences prefs;
+    private boolean font;
+
 
     private TextView tv_title_2, tv_check_2, tv_safe_2, tv_die_2,tv_title_1, tv_check_1, tv_safe_1,tv_die_1,
-            tv_title_3, tv_check_3, tv_safe_3, tv_die_3;;
+            tv_title_3, tv_check_3, tv_safe_3, tv_die_3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mContext = this;
-        //플래그 값 받기
-       // FlagVar myflag = (FlagVar) getApplicationContext();
-        //폰트변경
-       //fontvar = myflag.getFontvar();
-        //텍스트 크기
-       // flag = myflag.getState();
-
-
 
         Log.d(TAG, "MainActivity - onCreate() called");
+
+        //androidx.preference.PreferenceManager.setDefaultValues(this,R.xml.settings_preference,false);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        font =prefs.getBoolean("fontsize",false);
+        Log.d(TAG,"font"+font);
+        flag= FlagVar.getState();
+        //Log.d(TAG, "pref값"+String.valueOf(prefs.getAll()));
+        //mContext = this;
+        Log.d(TAG, "앞단 flag"+String.valueOf(flag));
+        //init();
+
         TextView mText = (TextView)findViewById(R.id.tv_main_title);
 
         fabQrcode = (FloatingActionButton)findViewById(R.id.fab);
@@ -96,7 +110,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
 **/
         //임시 세팅 버튼
-        ImageButton web_view = (ImageButton) findViewById(R.id.button);
+        Button setting = (Button) findViewById(R.id.btn_setting);
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setting();
+            }
+        });
+
+
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         // 첫화면에 띄워야 할 것들 지정해주기
@@ -127,37 +149,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
-    @Override
-    public void onClick(View view) {
 
-        switch (view.getId()) {
-
-            case R.id.fab :
-                Log.d(TAG, "MainActivity fab - onClick() called");
-                intent = new Intent(this, QrcodeActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.button:
-                intent = new Intent(getApplicationContext(), Setting.class);
-                startActivity(intent);
-                break;
-        }
-    }
-    /*
-    재시작
-    */
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //화면전환시 받을 값 지정
-        mContext = this;
-        //플래그 값 받기
-        //FlagVar myflag = (FlagVar) getApplicationContext();
-        //폰트변경
-        fontvar = FlagVar.getFontvar();
-        //텍스트 크기
-        flag = FlagVar.getState();
-
+    private void init() {
         tv_title_1 = findViewById(R.id.tv_title_1);
         tv_title_2 = findViewById(R.id.tv_title_2);
         tv_title_3 = findViewById(R.id.tv_title_3);
@@ -171,114 +164,99 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv_die_2 = findViewById(R.id.tv_die_2);
         tv_die_3 = findViewById(R.id.tv_die_3);
 
-
         if(flag == 1){
-            tv_title_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
-            tv_title_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-            tv_title_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 5);
-
-            tv_check_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
-            tv_check_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-            tv_check_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 5);
-
-            tv_safe_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
-            tv_safe_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-            tv_safe_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 5);
-
-            tv_die_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
-            tv_die_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-            tv_die_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 5);
-        }
-        else if(flag == 2){
-            tv_title_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
+            Log.d(TAG,"폰트사이즈 받았습니다.");
+            tv_title_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
             tv_title_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_title_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 5);
+            tv_title_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
 
-            tv_check_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
+            tv_check_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
             tv_check_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_check_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 5);
+            tv_check_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
 
-            tv_safe_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
+            tv_safe_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
             tv_safe_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_safe_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 5);
+            tv_safe_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
 
-            tv_die_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
+            tv_die_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
             tv_die_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_die_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 5);
-        }else if(flag == 3){
-            tv_title_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
-            tv_title_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_title_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 5);
+            tv_die_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+        } else if(flag == 2){
+            tv_title_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tv_title_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tv_title_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
 
-            tv_check_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
-            tv_check_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_check_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 5);
+            tv_check_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tv_check_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tv_check_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
 
-            tv_safe_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
-            tv_safe_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_safe_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 5);
+            tv_safe_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tv_safe_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tv_safe_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
 
-            tv_die_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
-            tv_die_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_die_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 5);
+            tv_die_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tv_die_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            tv_die_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
         }
-
-        ///// 폰트
-        else if(fontvar == 1){
-            if(typeface == null) {
-                typeface = ResourcesCompat.getFont(this, R.font.fonts);
-            }
-            setGlobalFont(getWindow().getDecorView());
-
-        }
-
-
-
-
-        bottomNavigationView = findViewById(R.id.bottom_navigation_view);
-        // 첫화면에 띄워야 할 것들 지정해주기
-        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame,menu1Fragment).commitAllowingStateLoss();
-        //바텀 네비게이션뷰 안의 아이템들 설정
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                switch (item.getItemId()) {
-                    case R.id.navigation_home: {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu1Fragment).commitAllowingStateLoss();
-                        break;
-                    }
-                    case R.id.navigation_report: {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu2Fragment).commitAllowingStateLoss();
-                        break;
-                    }
-                    case R.id.navigation_news: {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu3Fragment).commitAllowingStateLoss();
-                        break;
-                    }
-                }
-                return true;
-            }
-        });
     }
+    private void setting() {
+        Intent i = new Intent(this, SettingMain.class);
+        startActivity(i);
 
-    //폰트 전역 변경
-    public void setGlobalFont(View view) {
-        if(view != null) {
-            if(view instanceof ViewGroup) {
-                ViewGroup viewGroup = (ViewGroup)view;
-                int vgCnt = viewGroup.getChildCount();
-                for(int i = 0; i<vgCnt; i++) {
-                    View v = viewGroup.getChildAt(i);
-                    if(v instanceof TextView) {
-                        ((TextView) v).setTypeface(typeface);
-                    }
-                    setGlobalFont(v);
-                }
-            }
+}
+
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+
+            case R.id.fab :
+                Log.d(TAG, "MainActivity fab - onClick() called");
+                intent = new Intent(this, QrcodeActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.btn_setting:
+                intent = new Intent(getApplicationContext(), SettingMain.class);
+                startActivity(intent);
+                break;
         }
     }
 
-    //////////////////////////////////////
+
+
+    //재시작
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //화면전환시 받을 값 지정
+
+        mContext = this;
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean font =prefs.getBoolean("fontsize",false);
+        Log.d(TAG,prefs.toString());
+        if(font == true){
+            FlagVar.setState(2);
+        }else if(font == false){
+            FlagVar.setState(1);
+        }
+
+        //????
+
+
+//        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame,menu1Fragment).commit();
+//        getSupportFragmentManager().executePendingTransactions();
+//        //텍스트 크기 flag
+        //flag = FlagVar.getState();
+        //Log.d(TAG, "뒷단 flag"+String.valueOf(flag));
+
+        //init();
+
+    }
+
+    //폰트적용
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
+    }
 
 }

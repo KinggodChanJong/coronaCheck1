@@ -1,6 +1,7 @@
 package com.kang.coronacheck1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.Preference;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private class splashhandler implements Runnable{
         public void run(){
+
             startActivity(new Intent(getApplication(), MainActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
             finish(); // 로딩페이지 Activity stack에서 제거
         }

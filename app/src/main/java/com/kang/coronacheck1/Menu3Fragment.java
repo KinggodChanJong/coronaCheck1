@@ -69,6 +69,8 @@ public class Menu3Fragment extends Fragment {
         Log.d(TAG, "Menu3Fragment - onCreateView() called");
 
         viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_menu3,container,false);
+/*
+
 
         // 리사이클러뷰 아이템
         recyclerView = viewGroup.findViewById(R.id.recycler_view_news);
@@ -78,9 +80,28 @@ public class Menu3Fragment extends Fragment {
         adapter = new NewsAdapter();
         recyclerView.setAdapter(adapter);
         getData();
-
+*/
+        itemView();
         return viewGroup;
-    };
+    }
+
+    private void itemView() {
+        // 리사이클러뷰 아이템
+        recyclerView = viewGroup.findViewById(R.id.recycler_view_news);
+        // recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new NewsAdapter();
+        recyclerView.setAdapter(adapter);
+        getData();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        itemView();
+    }
+
+    ;
     // 뉴스 받아오기 위한 핸들러
 
     private void getData(){
@@ -137,4 +158,6 @@ public class Menu3Fragment extends Fragment {
             return null;
         }
     }
+
+
 }

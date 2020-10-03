@@ -47,23 +47,24 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
         Log.d("로그" , String.valueOf(flagVar));
         if (flagVar == 1){
             TextView title = viewHolder.mTitle;
-            title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+            title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
             TextView patient = viewHolder.mPatient;
-            patient.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+            patient.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
             TextView daily = viewHolder.mDaily;
-            daily.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+            daily.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
             TextView death = viewHolder.mDeath;
-            death.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
+            death.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+        }else if (flagVar == 2){
+            TextView title = viewHolder.mTitle;
+            title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
+            TextView patient = viewHolder.mPatient;
+            patient.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
+            TextView daily = viewHolder.mDaily;
+            daily.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
+            TextView death = viewHolder.mDeath;
+            death.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
         }
-        ///폰트
-        int fontchang = FlagVar.getFontvar();
-        if(fontchang == 1){
-            if(typeface == null) {
-                TextView title = viewHolder.mTitle;
-                typeface = ResourcesCompat.getFont(context, R.font.fonts);
-                title.setTypeface(typeface);
-            }
-        }
+
     }
     @Override
     public int getItemCount() {
