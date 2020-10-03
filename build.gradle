@@ -20,8 +20,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        //폰트
-        maven { url "https://jitpack.io" }
         //막대그래프 입력
         maven { url 'https://jitpack.io' }
     }

@@ -1,6 +1,8 @@
 package com.kang.coronacheck1;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
@@ -40,6 +42,8 @@ public class SettingPreferenceFragment extends PreferenceFragmentCompat  {
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         prefs.registerOnSharedPreferenceChangeListener(prefListener);
 
+
+
         if (font.isChecked() == true) {
             font.setDefaultValue(true);
             font.setSummaryOn("크게");
@@ -53,14 +57,17 @@ public class SettingPreferenceFragment extends PreferenceFragmentCompat  {
         }
     }
 
-    /*@Override
-    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        addPreferencesFromResource(R.xml.settings_preference);
-        Preference pref = findPreference("fontsize");
-        prefs.registerOnSharedPreferenceChangeListener(prefListener);
-    }*/
+    @Override
+    public boolean onPreferenceTreeClick(Preference preference) {
+        String key = preference.getKey();
+        if(key.equals("email")){
+            Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:eeee5656@naver.com"));
+            startActivity(intent);
+        }
+        return false;
+    }
 
-   SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+    SharedPreferences.OnSharedPreferenceChangeListener prefListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if(key.equals("fontsize")){

@@ -71,6 +71,7 @@ dependencies {
 
     //폰트 전역
     implementation "com.github.katoro:typekit:1.0.1"
-    //옵션 설정
+
+    //환경 설정을 위한  
     implementation 'androidx.preference:preference:1.1.0-alpha01'
 }

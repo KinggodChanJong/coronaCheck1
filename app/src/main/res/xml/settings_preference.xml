@@ -8,4 +8,10 @@
             android:disableDependentsState="false"
             />
     </PreferenceCategory>
+    <Preference
+        android:title="문의하기"
+        android:key="email">
+        <!--<intent android:targetPackage="com.kang.coronacheck1"
+            android:targetClass="com.kang.coronacheck1.EmailActivity"/>-->
+    </Preference>
 </PreferenceScreen>
