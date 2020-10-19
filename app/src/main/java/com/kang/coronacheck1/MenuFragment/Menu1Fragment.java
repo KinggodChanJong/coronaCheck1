@@ -1,11 +1,9 @@
-package com.kang.coronacheck1;
+package com.kang.coronacheck1.MenuFragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -18,36 +16,25 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceManager;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.kang.coronacheck1.FlagVar;
+import com.kang.coronacheck1.MainActivity;
+import com.kang.coronacheck1.R;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -64,6 +51,7 @@ public class Menu1Fragment extends Fragment {
     BarChart chart;
     String[] days;
     private SharedPreferences prefs;
+
 
     private TextView tvPatient,tvPatientNum,tvPatientYesterday, tvInspection, tvInspectionNum, tvInspectionYesterday,
             tvSafe, tvSafeNum, tvSafeYesterday, tvDie, tvDieNum, tvDieYesterday;
@@ -202,7 +190,23 @@ public class Menu1Fragment extends Fragment {
                             listPatientNum.add(report_today_patient.get(i).text());
                             listYesterdayNum.add(report_yesterday_patient.get(i).text());
                         }
-
+                        Elements report_date = doc.select("div .col-md-12").select("div .news_date");
+                        String []reportStringDate = report_date.text().split(" ");
+                        Log.d(TAG, "오늘의 날짜"+reportStringDate[1]);
+                        Date yDate = new Date();
+                        yDate = new Date(yDate.getTime());
+                        SimpleDateFormat dSdf = new SimpleDateFormat("d", Locale.KOREA);
+                        String phoneDateString = dSdf.format(yDate);
+                        Log.d(TAG, "핸드폰 날짜"+phoneDateString);
+                        if(!reportStringDate[1].equals(phoneDateString)){
+                            days = new String[7];
+                            for(int i=6; i>=0;i--){
+                                Date dDate = new Date();
+                                dDate = new Date(dDate.getTime()+(1000*60*60*24*-1)*(7-i));
+                                SimpleDateFormat yesterdayDate = new SimpleDateFormat("MM/dd", Locale.KOREA);
+                                days[i] = yesterdayDate.format(dDate);
+                            }
+                        }
                         tvPatientNum.setText(listPatientNum.get(0));
                         tvInspectionNum.setText(listPatientNum.get(1));
                         tvSafeNum.setText(listPatientNum.get(2));

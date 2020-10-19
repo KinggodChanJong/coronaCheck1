@@ -12,20 +12,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kang.coronacheck1.FlagVar;
 import com.kang.coronacheck1.NewsWebViewActivity;
 import com.kang.coronacheck1.R;
-import com.kang.coronacheck1.ReportItem;
+import com.kang.coronacheck1.Item.CityItem;
 
 import java.util.ArrayList;
 
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder> {
 
     private static final String TAG = "로그";
-    private ArrayList<ReportItem> listData = new ArrayList<>();
+    private ArrayList<CityItem> listData = new ArrayList<>();
 
     Context context ;
     private Typeface typeface;
@@ -34,7 +33,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     @Override
     public ReportAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_report, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_city, viewGroup, false);
         context = view.getContext();
         return new ReportAdapter.ViewHolder(view);
     }
@@ -70,7 +69,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     public int getItemCount() {
         return listData.size();
     }
-    public void addItem(ReportItem data) {
+    public void addItem(CityItem data) {
         // 외부에서 item을 추가시킬 함수입니다.
         listData.add(data);
     }
@@ -99,7 +98,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
             });
         }
 
-        void onBind(ReportItem data){
+        void onBind(CityItem data){
             mTitle.setText(data.getTitle());
             mPatient.setText(data.getPatient());
             mDaily.setText(data.getDaily());

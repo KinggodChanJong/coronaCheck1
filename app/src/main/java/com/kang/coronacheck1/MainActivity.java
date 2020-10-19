@@ -3,7 +3,6 @@ package com.kang.coronacheck1;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
@@ -12,32 +11,22 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.tsengvn.typekit.TypekitContextWrapper;
-
-import org.w3c.dom.Text;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.kang.coronacheck1.MenuFragment.Menu1Fragment;
+import com.kang.coronacheck1.MenuFragment.Menu3Fragment;
+import com.kang.coronacheck1.MenuFragment.Menu2Fragment;
+import com.kang.coronacheck1.MenuFragment.Menu4Fragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -66,6 +55,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mContext = this;
+        //플래그 값 받기
+       // FlagVar myflag = (FlagVar) getApplicationContext();
+        //폰트변경
+       //fontvar = myflag.getFontvar();
+        //텍스트 크기
+       // flag = myflag.getState();
+
         Log.d(TAG, "MainActivity - onCreate() called");
 
         //도움말
@@ -88,26 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView mText = (TextView)findViewById(R.id.tv_main_title);
         fabQrcode = (FloatingActionButton)findViewById(R.id.fab);
         fabQrcode.setOnClickListener(this);
-        /**
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Map<String, Object> user = new HashMap<>();
-        user.put("first", hiyo.getText().toString());
 
-        db.collection("users")
-                .add(user)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
-**/
         //임시 세팅 버튼
         Button setting = (Button) findViewById(R.id.btn_setting);
         setting.setOnClickListener(new View.OnClickListener() {
@@ -118,40 +95,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
-        // 첫화면에 띄워야 할 것들 지정해주기
-        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame,menu1Fragment).commitAllowingStateLoss();
-        //바텀 네비게이션뷰 안의 아이템들 설정
+        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu1Fragment).commit();
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 switch (item.getItemId()) {
                     case R.id.navigation_home: {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu1Fragment).commitAllowingStateLoss();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu1Fragment).commit();
                         mText.setText("코로나 현황");
-                        if(pop == 1) {
-                            startActivity(intent);
-                        }
                         break;
                     }
-                    case R.id.navigation_report: {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu2Fragment).commitAllowingStateLoss();
-                        mText.setText("코로나 도시별 현황");
-                        if(pop == 1) {
-                            startActivity(intent); }
+                    case R.id.navigation_city: {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu2Fragment).commit();
+                        mText.setText("코로나 도시 현황");
+                        break;
+                    }
+                    case R.id.navigation_world:{
+                        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu3Fragment).commit();
+                        mText.setText("코로나 세계 현황");
                         break;
                     }
                     case R.id.navigation_news: {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu3Fragment).commitAllowingStateLoss();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu4Fragment).commit();
                         mText.setText("코로나 TOP10 뉴스");
-                        if(pop == 1) {
-                            startActivity(intent);
-                        }
-                        break;
-                    }
-                    case R.id.navigation_faq:{
-                        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu4Fragment).commitAllowingStateLoss();
-                        mText.setText("코로나 FAQ");
                         break;
                     }
                 }

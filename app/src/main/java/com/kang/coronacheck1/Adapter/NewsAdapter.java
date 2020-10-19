@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kang.coronacheck1.FlagVar;
-import com.kang.coronacheck1.NewsItem;
+import com.kang.coronacheck1.Item.NewsItem;
 import com.kang.coronacheck1.NewsWebViewActivity;
 import com.kang.coronacheck1.R;
 import com.squareup.picasso.Picasso;

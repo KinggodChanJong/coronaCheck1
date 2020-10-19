@@ -5,16 +5,16 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="Home"/>
     <item
-        android:id="@+id/navigation_report"
-        android:icon="@drawable/report"
-        android:title="Report"/>
+        android:id="@+id/navigation_city"
+        android:icon="@mipmap/ic_launcher"
+        android:title="City"/>
+    <item
+        android:id="@+id/navigation_world"
+        android:icon="@drawable/ic_baseline_question_answer_24"
+        android:title="World"/>
     <item
         android:id="@+id/navigation_news"
         android:icon="@drawable/news"
         android:title="News"/>
-    <item
-        android:id="@+id/navigation_faq"
-        android:icon="@drawable/ic_baseline_question_answer_24"
-        android:title="FAQ"/>
 
 </menu>

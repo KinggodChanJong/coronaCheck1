@@ -1,4 +1,4 @@
-package com.kang.coronacheck1;
+package com.kang.coronacheck1.Item;
 
 public class NewsItem {
     String title, contents, image, url;

@@ -1,12 +1,12 @@
-package com.kang.coronacheck1;
+package com.kang.coronacheck1.Item;
 
-public class ReportItem {
+public class CityItem {
     String title;
     String patient;
     String daily;
     String death;
 
-    public ReportItem() {
+    public CityItem() {
         this.title = title;
         this.patient = patient;
         this.daily = daily;

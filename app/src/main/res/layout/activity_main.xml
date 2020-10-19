@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="#fbf29d"
     tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/tv_main_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_gravity="top"
         android:text="코로나 현황"
         android:textSize="20dp"
-        android:textColor="#00cc00"/>
+        android:textColor="#ac0e00"/>
 
     <FrameLayout
         android:id="@+id/layout_main_frame"

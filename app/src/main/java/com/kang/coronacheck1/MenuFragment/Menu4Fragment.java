@@ -1,7 +1,6 @@
-package com.kang.coronacheck1;
+package com.kang.coronacheck1.MenuFragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,13 +13,14 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kang.coronacheck1.Adapter.NewsAdapter;
+import com.kang.coronacheck1.Item.NewsItem;
+import com.kang.coronacheck1.MainActivity;
+import com.kang.coronacheck1.R;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -29,7 +29,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Menu3Fragment extends Fragment {
+public class Menu4Fragment extends Fragment {
 
     private static final String TAG = "로그";
 
@@ -49,7 +49,7 @@ public class Menu3Fragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Log.d(TAG, "Menu3Fragment - onAttach() called");
+        Log.d(TAG, "Menu4Fragment - onAttach() called");
         //이 메소드가 호출될떄는 프래그먼트가 엑티비티위에 올라와있는거니깐 getActivity메소드로 엑티비티참조가능
         activity = (MainActivity) getActivity();
     }
@@ -57,7 +57,7 @@ public class Menu3Fragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(TAG, "Menu3Fragment - onDetach() called");
+        Log.d(TAG, "Menu4Fragment - onDetach() called");
         //이제 더이상 엑티비티 참조가 안됨
         activity = null;
     }
@@ -66,9 +66,9 @@ public class Menu3Fragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        Log.d(TAG, "Menu3Fragment - onCreateView() called");
+        Log.d(TAG, "Menu4Fragment - onCreateView() called");
 
-        viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_menu3,container,false);
+        viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_menu4,container,false);
 /*
 
 
@@ -82,6 +82,7 @@ public class Menu3Fragment extends Fragment {
         getData();
 */
         itemView();
+        getData();
         return viewGroup;
     }
 
@@ -92,20 +93,19 @@ public class Menu3Fragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new NewsAdapter();
-        recyclerView.setAdapter(adapter);
-        getData();
+
+
     }
     @Override
     public void onResume() {
         super.onResume();
-        itemView();
+        adapter.notifyDataSetChanged();
     }
-
     ;
     // 뉴스 받아오기 위한 핸들러
 
     private void getData(){
-        Log.d(TAG, "Menu3Fragment - getData() called");
+        Log.d(TAG, "Menu4Fragment - getData() called");
         NewsJsoup jsoupAsyncTask = new NewsJsoup();
         jsoupAsyncTask.execute();
     }
@@ -150,6 +150,7 @@ public class Menu3Fragment extends Fragment {
                             adapter.addItem(data);
                         }
                         adapter.notifyDataSetChanged();
+                        recyclerView.setAdapter(adapter);
                     }
                 });
             } catch (IOException e) {
@@ -157,6 +158,9 @@ public class Menu3Fragment extends Fragment {
             }
             return null;
         }
+    }
+    public void refresh(){
+        adapter.notifyDataSetChanged();
     }
 
 

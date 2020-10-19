@@ -4,103 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:weightSum="3">
-
-        <Button
-            android:id="@+id/btn_frag_info"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_weight="1"
-            android:text="병원체 정보"/>
-        <Button
-            android:id="@+id/btn_frag_contact"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_weight="1"
-            android:text="접촉자 및 확진환자"/>
-        <Button
-            android:id="@+id/btn_frag_pre"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_weight="1"
-            android:text="임신과 출산"/>
-    </LinearLayout>
+<!--    <TextView-->
+<!--        android:id="@+id/tv_news_frag_info"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="top|right"-->
+<!--        android:layout_marginTop="5dp"-->
+<!--        android:layout_marginBottom="5dp"-->
+<!--        android:layout_marginRight="5dp"-->
+<!--        android:text="네이버 뉴스를 기준으로 만들었습니다.\n 실제와 뉴스가 다를 수 있습니다."-->
+<!--        android:textColor="#808080" />-->
 
     <LinearLayout
+        android:id="@+id/ll_news_frag"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="50dp"
-        android:weightSum="4">
-        <Button
-            android:id="@+id/btn_frag_inspection"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_weight="1"
-            android:text="검사"/>
-        <Button
-            android:id="@+id/btn_frag_cure"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_weight="1"
-            android:text="치료 및 예방"/>
-        <Button
-            android:id="@+id/btn_frag_symptom"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_weight="1"
-            android:text="증상"/>
-        <Button
-            android:id="@+id/btn_frag_isolation"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_weight="1"
-            android:text="격리 및 격리해제"/>
-    </LinearLayout>
+        android:layout_marginBottom="5dp"
+        android:gravity="top">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:layout_marginTop="100dp"
-        android:weightSum="4">
 
-        <Button
-            android:id="@+id/btn_frag_pay"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_weight="1"
-            android:text="격리입원치료비"/>
-        <Button
-            android:id="@+id/btn_frag_management"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_weight="1"
-            android:text="유증상자 관리"/>
-        <Button
-            android:id="@+id/btn_frag_clean"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_weight="1"
-            android:text="청소 및 소독"/>
-        <Button
-            android:id="@+id/btn_frag_etc"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_weight="1"
-            android:text="기타"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_faq"
+        android:id="@+id/recycler_view_news"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        android:layout_marginTop="150dp"
+        android:layout_below="@id/ll_news_frag"
         android:layout_marginBottom="50dp"/>
 
 </RelativeLayout>
