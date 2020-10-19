@@ -9,12 +9,13 @@
         cardCornerRadius="2dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="5dp"
         app:cardElevation="2dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#F2F2F2">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/iv_news_item_image"

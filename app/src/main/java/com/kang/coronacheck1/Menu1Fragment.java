@@ -252,7 +252,7 @@ public class Menu1Fragment extends Fragment {
                         //데이터 셋
                         BarData data = new BarData(days, bardataset);// MPAndroidChart v3.X 오류 발생
                         // bar 차트 색 지정
-                        bardataset.setColor(Color.parseColor("#731D5C"));
+                        bardataset.setColor(Color.parseColor("#ea6044"));
                         data.setValueTextSize(10f);
                         chart.setData(data);
 

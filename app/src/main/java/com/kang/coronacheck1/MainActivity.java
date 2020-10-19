@@ -1,6 +1,7 @@
 package com.kang.coronacheck1;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentManager;
@@ -8,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = "로그";
     public static Context mContext;//새로고침을 위한 추가
     private static Typeface typeface; //글꼴 전역 변경을 위해 추가
+    private int pop;
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private Menu1Fragment menu1Fragment = new Menu1Fragment();
@@ -55,42 +58,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //플래그 값 초기화
     private int flag = FlagVar.getState();
-    SharedPreferences prefs;
+    SharedPreferences prefs , helpprefs;
     private boolean font;
-
-
-    private TextView tv_title_2, tv_check_2, tv_safe_2, tv_die_2,tv_title_1, tv_check_1, tv_safe_1,tv_die_1,
-            tv_title_3, tv_check_3, tv_safe_3, tv_die_3;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mContext = this;
-        //플래그 값 받기
-       // FlagVar myflag = (FlagVar) getApplicationContext();
-        //폰트변경
-       //fontvar = myflag.getFontvar();
-        //텍스트 크기
-       // flag = myflag.getState();
-
-
-
         Log.d(TAG, "MainActivity - onCreate() called");
 
-        //androidx.preference.PreferenceManager.setDefaultValues(this,R.xml.settings_preference,false);
+        //도움말
+            helpprefs = getSharedPreferences("a",MODE_PRIVATE);
+            int firstviewhow = helpprefs.getInt("First",0);
+
+            if(firstviewhow != 1){
+                Intent intent = new Intent(MainActivity.this,FirstStartActivity.class);
+                startActivity(intent);
+            }
+        //
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         font =prefs.getBoolean("fontsize",false);
+        boolean flagpopup =prefs.getBoolean("popup",false);
+
         Log.d(TAG,"font"+font);
         flag= FlagVar.getState();
-        //Log.d(TAG, "pref값"+String.valueOf(prefs.getAll()));
-        //mContext = this;
         Log.d(TAG, "앞단 flag"+String.valueOf(flag));
-        //init();
 
         TextView mText = (TextView)findViewById(R.id.tv_main_title);
-
         fabQrcode = (FloatingActionButton)findViewById(R.id.fab);
         fabQrcode.setOnClickListener(this);
         /**
@@ -134,16 +129,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case R.id.navigation_home: {
                         getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu1Fragment).commitAllowingStateLoss();
                         mText.setText("코로나 현황");
+                        if(pop == 1) {
+                            startActivity(intent);
+                        }
                         break;
                     }
                     case R.id.navigation_report: {
                         getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu2Fragment).commitAllowingStateLoss();
                         mText.setText("코로나 도시별 현황");
+                        if(pop == 1) {
+                            startActivity(intent); }
                         break;
                     }
                     case R.id.navigation_news: {
                         getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu3Fragment).commitAllowingStateLoss();
                         mText.setText("코로나 TOP10 뉴스");
+                        if(pop == 1) {
+                            startActivity(intent);
+                        }
                         break;
                     }
                     case R.id.navigation_faq:{
@@ -157,62 +160,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    private void init() {
-        tv_title_1 =findViewById(R.id. tv_home_frag_patient);
-        tv_check_1 = findViewById(R.id.tv_home_frag_inspection);
-        tv_safe_1 = findViewById(R.id.tv_home_frag_safe);
-        tv_die_1 = findViewById(R.id.tv_home_frag_die);
-        //누적 합계
-        tv_title_2 = findViewById(R.id. tv_home_frag_patient_num);
-        tv_check_2 = findViewById(R.id.tv_home_frag_inspection_num);
-        tv_safe_2 = findViewById(R.id.tv_home_frag_safe_num);
-        tv_die_2 = findViewById(R.id.tv_home_frag_die_num);
-        //오늘 증가량
-        tv_title_3 = findViewById(R.id. tv_home_frag_patient_yesterday);
-        tv_check_3 = findViewById(R.id.tv_home_frag_inspection_yesterday);
-        tv_safe_3 = findViewById(R.id.tv_home_frag_safe_yesterday);
-        tv_die_3 = findViewById(R.id.tv_home_frag_die_yesterday);
-
-        if(flag == 1){
-            Log.d(TAG,"폰트사이즈 받았습니다.");
-            tv_title_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_title_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_title_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
-
-            tv_check_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_check_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_check_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
-
-            tv_safe_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_safe_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_safe_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
-
-            tv_die_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_die_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
-            tv_die_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10);
-        } else if(flag == 2){
-            tv_title_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-            tv_title_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-            tv_title_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-
-            tv_check_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-            tv_check_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-            tv_check_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-
-            tv_safe_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-            tv_safe_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-            tv_safe_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-
-            tv_die_1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-            tv_die_2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-            tv_die_3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-        }
-    }
     private void setting() {
         Intent i = new Intent(this, SettingMain.class);
         startActivity(i);
-
-}
+    }
 
     @Override
     public void onClick(View view) {
@@ -231,8 +182,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
-
     //재시작
     @Override
     protected void onResume() {
@@ -241,31 +190,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mContext = this;
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
         boolean font =prefs.getBoolean("fontsize",false);
+        //도움말 스위치
+        boolean flagpopup =prefs.getBoolean("popup",false);
+        //도움말 팝업
+        if(flagpopup == false){
+
+            /*CustomDialog customDialog = new CustomDialog(MainActivity.this);
+            customDialog.callFunction();*/
+            //팝업창
+            /*new AlertDialog.Builder(MainActivity.this) // 현재 Activity의 이름 입력.
+                    .setTitle("도움말")
+                    .setMessage("가나다라")     // 제목 부분 (직접 작성)
+                    .setPositiveButton("다시보지 않기", new DialogInterface.OnClickListener() {      // 버튼1 (직접 작성)
+                        public void onClick(DialogInterface dialog, int which) {
+                            FlagVar.setPopup(2);
+                        }
+                    })
+                    .setNegativeButton("확인", new DialogInterface.OnClickListener() {     // 버튼2 (직접 작성)
+                        public void onClick(DialogInterface dialog, int which){
+                        }
+                    })
+                    .show();*/
+        }
         Log.d(TAG,prefs.toString());
         if(font == true){
             FlagVar.setState(2);
         }else if(font == false){
             FlagVar.setState(1);
         }
-
-        //????
-
-
-//        getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame,menu1Fragment).commit();
-//        getSupportFragmentManager().executePendingTransactions();
-//        //텍스트 크기 flag
-        //flag = FlagVar.getState();
-        //Log.d(TAG, "뒷단 flag"+String.valueOf(flag));
-
-        init();
-
-    }
-
-    //폰트적용
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
     }
 
 }

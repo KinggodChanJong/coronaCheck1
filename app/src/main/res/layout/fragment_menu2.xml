@@ -14,6 +14,7 @@
         <TextView
             android:id="@+id/tv_report_frag_title"
             android:layout_width="0dp"
+            android:textColor="@color/colorText"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="18dp"
@@ -32,10 +33,12 @@
             android:layout_weight="1.1"
             android:gravity="center_horizontal"
             android:text="누적 확진자"
+            android:textColor="@color/colorText"
             android:textSize="15dp" />
 
         <TextView
             android:id="@+id/tv_report_frag_daily"
+            android:textColor="@color/colorText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tv_report_item_patient"
@@ -56,6 +59,7 @@
             android:layout_weight="0.9"
             android:gravity="center_horizontal"
             android:text="사망자"
+            android:textColor="@color/colorText"
             android:textSize="15dp"/>
 
     </LinearLayout>

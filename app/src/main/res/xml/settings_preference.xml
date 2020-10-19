@@ -8,6 +8,12 @@
             android:disableDependentsState="false"
             />
     </PreferenceCategory>
+    <SwitchPreferenceCompat
+        android:key="popup"
+        android:title="도움말 끄기"
+        android:defaultValue="false"
+        android:disableDependentsState="false"
+        />
     <Preference
         android:title="문의하기"
         android:key="email">

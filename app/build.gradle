@@ -17,6 +17,8 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+        //백터이미지 생성 코드
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -74,4 +76,11 @@ dependencies {
 
     //환경 설정을 위한  
     implementation 'androidx.preference:preference:1.1.0-alpha01'
+
+    //qr코드
+    implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
+    implementation 'com.google.zxing:core:3.2.1'
+    //도움말
+    implementation 'me.relex:circleindicator:1.2.2'
+
 }

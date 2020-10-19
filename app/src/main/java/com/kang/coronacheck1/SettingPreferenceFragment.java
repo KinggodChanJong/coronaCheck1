@@ -20,29 +20,17 @@ import java.util.prefs.Preferences;
 
 public class SettingPreferenceFragment extends PreferenceFragmentCompat  {
     private static final String TAG = "로그";
-    private static SwitchPreferenceCompat font;
+    private static SwitchPreferenceCompat font,popup;
     SharedPreferences prefs;
-  /*  @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.settings_preference);
-        PreferenceManager.setDefaultValues(SettingPreferenceFragment.this, R.xml.settings_preference,
-                false);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
-        prefs.registerOnSharedPreferenceChangeListener(prefListener);
-    }
-*/
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.settings_preference);
         font = (SwitchPreferenceCompat) findPreference("fontsize");
+
         Log.d(TAG,"체크?" + font);
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         prefs.registerOnSharedPreferenceChangeListener(prefListener);
-
-
 
         if (font.isChecked() == true) {
             font.setDefaultValue(true);
@@ -84,7 +72,7 @@ public class SettingPreferenceFragment extends PreferenceFragmentCompat  {
                     Log.d(TAG,"논체크" + font);
                     ((MainActivity)(MainActivity.mContext)).onResume();
                 }
-        }
+            }
         }
     };
 

@@ -48,12 +48,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 TextView title = viewHolder.mTitle;
                 title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
                 TextView contents = viewHolder.mContents;
-                contents.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+                contents.setTextSize(TypedValue.COMPLEX_UNIT_DIP,16 );
         }else if (flagVar == 2){
             TextView title = viewHolder.mTitle;
             title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
             TextView contents = viewHolder.mContents;
-            contents.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+            contents.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 26);
         }
     }
     @Override

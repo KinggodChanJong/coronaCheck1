@@ -1,6 +1,8 @@
 package com.kang.coronacheck1;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +47,8 @@ public class Menu2Fragment extends Fragment{
     ArrayList<String> listPatient = new ArrayList<>();
     ArrayList<String> listDaily = new ArrayList<>();
     ArrayList<String> listDeath = new ArrayList<>();
+    private SharedPreferences prefs;
+    private Intent intent;
 
     @Override
     public void onAttach(Context context) {
@@ -68,7 +73,6 @@ public class Menu2Fragment extends Fragment{
         Log.d(TAG, "Menu2Fragment - onCreateView() called");
 
         viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_menu2,container,false);
-
         //리사이클러뷰 아이템
         itemView();
         getData();
