@@ -6,7 +6,7 @@
     >
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardview_report_item"
+        android:id="@+id/cardview_city_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardUseCompatPadding="true"
@@ -19,8 +19,15 @@
             android:background="#fbf29d"
             android:weightSum="4">
 
+            <ImageView
+                android:id="@+id/iv_city_item_image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical">
+            </ImageView>
+
             <TextView
-                android:id="@+id/tv_report_item_title"
+                android:id="@+id/tv_city_item_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -34,10 +41,10 @@
 
             <TextView
 
-                android:id="@+id/tv_report_item_patient"
+                android:id="@+id/tv_city_item_patient"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/tv_report_item_title"
+                android:layout_toRightOf="@id/tv_city_item_title"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1.1"
                 android:gravity="center"
@@ -48,10 +55,10 @@
                 android:textColor="@color/colorText"/>
 
             <TextView
-                android:id="@+id/tv_report_item_daily"
+                android:id="@+id/tv_city_item_daily"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/tv_report_item_patient"
+                android:layout_toRightOf="@id/tv_city_item_patient"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1.1"
                 android:gravity="center"
@@ -63,10 +70,10 @@
 
             <TextView
 
-                android:id="@+id/tv_report_item_death"
+                android:id="@+id/tv_city_item_death"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/tv_report_item_daily"
+                android:layout_toRightOf="@id/tv_city_item_daily"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="0.9"
                 android:gravity="center"

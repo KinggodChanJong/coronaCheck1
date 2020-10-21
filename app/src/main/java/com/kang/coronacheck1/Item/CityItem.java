@@ -5,12 +5,14 @@ public class CityItem {
     String patient;
     String daily;
     String death;
+    int image;
 
     public CityItem() {
         this.title = title;
         this.patient = patient;
         this.daily = daily;
         this.death = death;
+        this.image = image;
     }
 
     public String getTitle() {
@@ -43,6 +45,14 @@ public class CityItem {
 
     public void setDeath(String death) {
         this.death = death;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
     }
 }
 

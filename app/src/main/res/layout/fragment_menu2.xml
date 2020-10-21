@@ -28,7 +28,6 @@
             android:id="@+id/tv_report_frag_patient"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/tv_report_item_title"
             android:layout_marginTop="12dp"
             android:layout_marginLeft="20dp"
             android:layout_weight="1.1"
@@ -41,7 +40,7 @@
             android:id="@+id/tv_report_frag_daily"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/tv_report_item_patient"
+
             android:layout_marginTop="12dp"
             android:layout_marginLeft="20dp"
             android:layout_weight="1.1"
@@ -54,7 +53,7 @@
             android:id="@+id/tv_report_frag_death"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/tv_report_item_daily"
+
             android:layout_marginTop="12dp"
             android:layout_marginLeft="20dp"
             android:layout_weight="0.9"
