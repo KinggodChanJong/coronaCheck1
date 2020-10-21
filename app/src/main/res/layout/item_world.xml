@@ -9,13 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardUseCompatPadding="true"
-        app:cardCornerRadius="5dp">
+        app:cardCornerRadius="5dp"
+        android:background="@color/colorCardBack">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="#ffffff"
             android:weightSum="4">
 
             <TextView
@@ -24,12 +24,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:gravity="center"
+                android:layout_gravity="center_vertical"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:layout_weight="0.9"
+                android:layout_weight="0.8"
                 android:text="국가 순위"
                 android:textSize="20dp"
-                android:textColor="#ac0e00"/>
+                android:textColor="@color/colorText"/>
 
             <TextView
                 android:id="@+id/tv_world_item_nation"
@@ -37,13 +38,13 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/tv_world_item_rank"
                 android:layout_marginLeft="20dp"
-                android:layout_weight="1.1"
+                android:layout_weight="1.2"
                 android:gravity="center"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:text="국가 이름"
                 android:textSize="20dp"
-                android:textColor="#ac0e00"/>
+                android:textColor="@color/colorText"/>
 
             <TextView
                 android:id="@+id/tv_world_item_patient"
@@ -53,11 +54,12 @@
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1.1"
                 android:gravity="center"
+                android:layout_gravity="center_vertical"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:text="전일 대비 증가"
                 android:textSize="20dp"
-                android:textColor="#ac0e00"/>
+                android:textColor="@color/colorText"/>
 
             <TextView
                 android:id="@+id/tv_world_item_death"
@@ -67,11 +69,12 @@
                 android:layout_marginLeft="20dp"
                 android:layout_weight="0.9"
                 android:gravity="center"
+                android:layout_gravity="center_vertical"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:text="사망자"
                 android:textSize="20dp"
-                android:textColor="#ac0e00"/>
+                android:textColor="@color/colorText"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

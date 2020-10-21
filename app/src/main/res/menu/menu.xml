@@ -6,11 +6,11 @@
         android:title="Home"/>
     <item
         android:id="@+id/navigation_city"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/report2"
         android:title="City"/>
     <item
         android:id="@+id/navigation_world"
-        android:icon="@drawable/ic_baseline_question_answer_24"
+        android:icon="@drawable/earth2"
         android:title="World"/>
     <item
         android:id="@+id/navigation_news"

@@ -9,6 +9,7 @@
         android:id="@+id/cardview_city_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorCardBack"
         app:cardUseCompatPadding="true"
         app:cardCornerRadius="5dp">
 
@@ -16,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="#fbf29d"
+            android:background="@color/colorCardBack"
             android:weightSum="4">
 
             <ImageView
