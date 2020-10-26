@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Menu4Fragment menu4Fragment = new Menu4Fragment();
 
     private BottomNavigationView bottomNavigationView;
-    private FloatingActionButton fabQrcode;
+    private Button fabQrcode;
     Intent intent;
 
     //플래그 값 초기화
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             helpprefs = getSharedPreferences("a",MODE_PRIVATE);
             int firstviewhow = helpprefs.getInt("First",0);
 
-            if(firstviewhow != 1){
+            if(firstviewhow != 2){
                 Intent intent = new Intent(MainActivity.this,FirstStartActivity.class);
                 startActivity(intent);
             }
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.d(TAG, "앞단 flag"+String.valueOf(flag));
 
         TextView mText = (TextView)findViewById(R.id.tv_main_title);
-        fabQrcode = (FloatingActionButton)findViewById(R.id.fab);
+        fabQrcode = (Button)findViewById(R.id.fab);
         fabQrcode.setOnClickListener(this);
 
         //임시 세팅 버튼

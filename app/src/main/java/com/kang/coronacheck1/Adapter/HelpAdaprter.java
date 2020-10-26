@@ -5,17 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.kang.coronacheck1.R;
 
 public class HelpAdaprter extends PagerAdapter {
-    private int[] images = {R.drawable.temp_img1,
-            R.drawable.temp_img2,
-            R.drawable.temp_img3};
+    private int[] images = {R.drawable.help1,
+            R.drawable.help2,
+            R.drawable.help3,
+            R.drawable.help4};
     private LayoutInflater inflater;
     private Context context;
 

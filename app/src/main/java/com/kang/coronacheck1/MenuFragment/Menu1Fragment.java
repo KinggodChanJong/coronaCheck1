@@ -247,7 +247,6 @@ public class Menu1Fragment extends Fragment {
 
                         //요일 아래 나오게
                         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-
                         //오른쪽 라벨 지우기
                         yRAxis.setDrawLabels(false);
                         yRAxis.setDrawAxisLine(false);
@@ -256,10 +255,9 @@ public class Menu1Fragment extends Fragment {
                         //데이터 셋
                         BarData data = new BarData(days, bardataset);// MPAndroidChart v3.X 오류 발생
                         // bar 차트 색 지정
-                        bardataset.setColor(Color.parseColor("#025E73"));
-                        data.setValueTextSize(10f);
+                        bardataset.setColor(Color.parseColor("#F25041"));
+                        data.setValueTextSize(10);
                         chart.setData(data);
-
                     }
                 });
             } catch (IOException e) {

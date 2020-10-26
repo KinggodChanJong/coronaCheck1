@@ -3,6 +3,8 @@ package com.kang.coronacheck1.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kang.coronacheck1.FlagVar;
 import com.kang.coronacheck1.Item.WorldItem;
 import com.kang.coronacheck1.NewsWebViewActivity;
 import com.kang.coronacheck1.R;
@@ -37,6 +40,29 @@ public class WorldAdapter extends RecyclerView.Adapter<WorldAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull WorldAdapter.ViewHolder viewHolder, int i) {
         viewHolder.onBind(listData.get(i));
+
+        /////텍스트 크기
+        int flagVar = FlagVar.getState();
+        Log.d("로그" , String.valueOf(flagVar));
+        if (flagVar == 1){
+            TextView title = viewHolder.mRank;
+            title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            TextView patient = viewHolder.mNation;
+            patient.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            TextView daily = viewHolder.mPatient;
+            daily.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+            TextView death = viewHolder.mDeath;
+            death.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+        }else if (flagVar == 2){
+            TextView title = viewHolder.mRank;
+            title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
+            TextView patient = viewHolder.mNation;
+            patient.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
+            TextView daily = viewHolder.mPatient;
+            daily.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
+            TextView death = viewHolder.mDeath;
+            death.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
+        }
 
     }
     @Override
