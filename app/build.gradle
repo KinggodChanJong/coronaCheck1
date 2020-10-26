@@ -82,5 +82,8 @@ dependencies {
     implementation 'com.google.zxing:core:3.2.1'
     //도움말
     implementation 'me.relex:circleindicator:1.2.2'
+    
+    // 네이버 로그인
+    implementation 'com.naver.nid:naveridlogin-android-sdk:4.2.6'
 
 }

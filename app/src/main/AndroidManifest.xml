@@ -25,6 +25,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".QrcodeActivity" />
         <activity android:name=".NewsWebViewActivity" />
+        <activity android:name=".NaverLoginActivity" />
     </application>
 
 </manifest>

@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -27,10 +28,16 @@ import com.kang.coronacheck1.MenuFragment.Menu1Fragment;
 import com.kang.coronacheck1.MenuFragment.Menu3Fragment;
 import com.kang.coronacheck1.MenuFragment.Menu2Fragment;
 import com.kang.coronacheck1.MenuFragment.Menu4Fragment;
+import com.nhn.android.naverlogin.OAuthLogin;
+import com.nhn.android.naverlogin.OAuthLoginHandler;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "로그";
+
+
+    public static OAuthLogin mOAuthLoginInstance;
+    // 네이버 로그인
     public static Context mContext;//새로고침을 위한 추가
     private static Typeface typeface; //글꼴 전역 변경을 위해 추가
     private int pop;
@@ -54,7 +61,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mContext = this;
+
+
+
+
+
+
         //플래그 값 받기
        // FlagVar myflag = (FlagVar) getApplicationContext();
         //폰트변경
@@ -68,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             helpprefs = getSharedPreferences("a",MODE_PRIVATE);
             int firstviewhow = helpprefs.getInt("First",0);
 
-            if(firstviewhow != 2){
+            if(firstviewhow != 1){
                 Intent intent = new Intent(MainActivity.this,FirstStartActivity.class);
                 startActivity(intent);
             }
@@ -139,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.fab :
                 Log.d(TAG, "MainActivity fab - onClick() called");
+
                 intent = new Intent(this, QrcodeActivity.class);
                 startActivity(intent);
                 break;
@@ -188,5 +201,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             FlagVar.setState(1);
         }
     }
+
 
 }
