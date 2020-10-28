@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
@@ -34,12 +35,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final String TAG = "로그";
 
+    private String page = "0";
 
-    // public static OAuthLogin mOAuthLoginInstance;
-    // 네이버 로그인
     public static Context mContext;//새로고침을 위한 추가
     private static Typeface typeface; //글꼴 전역 변경을 위해 추가
-    private int pop;
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
     private Menu1Fragment menu1Fragment = new Menu1Fragment();
@@ -60,14 +59,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //플래그 값 받기
-       // FlagVar myflag = (FlagVar) getApplicationContext();
-        //폰트변경
-       //fontvar = myflag.getFontvar();
-        //텍스트 크기
-       // flag = myflag.getState();
 
         Log.d(TAG, "MainActivity - onCreate() called");
+
+
 
         //도움말
             helpprefs = getSharedPreferences("a",MODE_PRIVATE);
@@ -99,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+
         bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu1Fragment).commit();
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -109,31 +105,55 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case R.id.navigation_home: {
                         getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu1Fragment).commit();
                         mText.setText("코로나 현황");
+                        page ="1";
                         break;
                     }
                     case R.id.navigation_city: {
                         getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu2Fragment).commit();
                         mText.setText("코로나 도시 현황");
+                        page ="2";
                         break;
                     }
                     case R.id.navigation_world:{
                         getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu3Fragment).commit();
                         mText.setText("코로나 세계 현황");
+                        page ="3";
                         break;
                     }
                     case R.id.navigation_news: {
                         getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu4Fragment).commit();
                         mText.setText("코로나 TOP10 뉴스");
+                        page ="4";
                         break;
                     }
                 }
                 return true;
             }
         });
+        Intent intent = getIntent();
+        String pageOK = intent.getStringExtra("page");
+        if(TextUtils.isEmpty(pageOK)){
+            getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu1Fragment).commit();
+            bottomNavigationView.setSelectedItemId(R.id.navigation_home);
+            Log.d("1프레그먼트", "1");
+        }else if(pageOK.equals("2")) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu2Fragment).commit();
+            bottomNavigationView.setSelectedItemId(R.id.navigation_city);
+            Log.d("2프레그먼트", "2");
+        } else if(pageOK.equals("3")) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu3Fragment).commit();
+            bottomNavigationView.setSelectedItemId(R.id.navigation_world);
+            Log.d("3프레그먼트", "3");
+        }else if(pageOK.equals("4")) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.layout_main_frame, menu4Fragment).commit();
+            bottomNavigationView.setSelectedItemId(R.id.navigation_news);
+            Log.d("4프레그먼트", "4");
+        }
     }
 
     private void setting() {
         Intent i = new Intent(this, SettingMain.class);
+        i.putExtra("page", page);
         startActivity(i);
     }
 
@@ -165,28 +185,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         boolean font =prefs.getBoolean("fontsize",false);
-        //도움말 스위치
-        boolean flagpopup =prefs.getBoolean("popup",false);
-        //도움말 팝업
-        if(flagpopup == false){
 
-            /*CustomDialog customDialog = new CustomDialog(MainActivity.this);
-            customDialog.callFunction();*/
-            //팝업창
-            /*new AlertDialog.Builder(MainActivity.this) // 현재 Activity의 이름 입력.
-                    .setTitle("도움말")
-                    .setMessage("가나다라")     // 제목 부분 (직접 작성)
-                    .setPositiveButton("다시보지 않기", new DialogInterface.OnClickListener() {      // 버튼1 (직접 작성)
-                        public void onClick(DialogInterface dialog, int which) {
-                            FlagVar.setPopup(2);
-                        }
-                    })
-                    .setNegativeButton("확인", new DialogInterface.OnClickListener() {     // 버튼2 (직접 작성)
-                        public void onClick(DialogInterface dialog, int which){
-                        }
-                    })
-                    .show();*/
-        }
         Log.d(TAG,prefs.toString());
         if(font == true){
             FlagVar.setState(2);
@@ -194,6 +193,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             FlagVar.setState(1);
         }
     }
-
-
 }

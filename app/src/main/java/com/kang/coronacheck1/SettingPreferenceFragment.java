@@ -62,7 +62,13 @@ public class SettingPreferenceFragment extends PreferenceFragmentCompat  {
             clearApplicationData(this);
         }else if(key.equals("helppop")){
             Intent intent = new Intent(getContext(),FirstStartActivity.class);
+            intent.putExtra("count", "2");
             startActivity(intent);
+        }
+        try {
+            finalize();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
         }
 
         return false;
@@ -110,6 +116,12 @@ public class SettingPreferenceFragment extends PreferenceFragmentCompat  {
             });
             cookieManager.getInstance().flush();
         }
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        prefs.unregisterOnSharedPreferenceChangeListener(prefListener);
+        Log.d("디스트로이 로그", "넘어왔땅");
     }
 
 }

@@ -10,7 +10,7 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.kang.coronacheck1.R;
 
-public class HelpAdaprter extends PagerAdapter {
+public class HelpAdapter extends PagerAdapter {
     private int[] images = {R.drawable.help1,
             R.drawable.help2,
             R.drawable.help3,
@@ -18,7 +18,7 @@ public class HelpAdaprter extends PagerAdapter {
     private LayoutInflater inflater;
     private Context context;
 
-    public HelpAdaprter(Context context){
+    public HelpAdapter(Context context){
         this.context = context;
     }
 

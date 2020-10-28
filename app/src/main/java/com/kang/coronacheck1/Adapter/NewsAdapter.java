@@ -89,7 +89,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                     }
                 }
             });
-
         }
 
         void onBind(NewsItem data){

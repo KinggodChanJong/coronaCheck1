@@ -13,7 +13,6 @@ public class WorldItem {
         this.death = death;
     }
 
-
     public String getNation() {
         return nation;
     }

@@ -68,18 +68,17 @@ public class Menu3Fragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         Log.d(TAG, "Menu3Fragment - onCreateView() called");
 
         viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_menu3,container,false);
-
         //리사이클러뷰 아이템
-        itemView();
+        init();
         getData();
         return viewGroup;
     }
 
-    private void itemView() {
+    private void init() {
+        Log.d(TAG, "Menu3Fragment - onCreateView() called");
         //텍스트 크기 지정
         mTitle = viewGroup.findViewById(R.id.tv_world_frag_title);
         mPatient = viewGroup.findViewById(R.id.tv_world_frag_patient);
@@ -101,7 +100,6 @@ public class Menu3Fragment extends Fragment {
         }
         // 리사이클러뷰 아이템
         recyclerView = viewGroup.findViewById(R.id.recycler_view_world);
-        // recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new WorldAdapter();
@@ -118,6 +116,7 @@ public class Menu3Fragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
+            Log.d(TAG, "Menu3Fragment - WorldJsuop called");
             try {
                 Document doc = Jsoup.connect("http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=1&brdGubun=14&ncvContSeq=&contSeq=&board_id=&gubun=").get();
                 Handler handler = new Handler(Looper.getMainLooper()); // 객체생성
@@ -128,10 +127,8 @@ public class Menu3Fragment extends Fragment {
                         Elements world_nation = doc.select("div div.data_table.mgt8").select("table.num").select("tbody tr th");
                         Elements world_patient = doc.select("div div.data_table.mgt8").select("table.num").select("tbody tr td");
 
-                        Log.d(TAG, "국가"+world_nation.text());
-                        Log.d(TAG, world_patient.text());
-
-
+                        // Log.d(TAG, "국가"+world_nation.text());
+                        // Log.d(TAG, world_patient.text());
 
                         for(int i=0; i<110;i++){
                             if(i%5==0){
@@ -155,7 +152,6 @@ public class Menu3Fragment extends Fragment {
                             adapter.addItem(data);
                         }
                         Log.d(TAG, listPatient.toString());
-                        // Log.d(TAG, dfdf);
                         adapter.notifyDataSetChanged();
                     }
                 });

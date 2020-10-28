@@ -1,7 +1,6 @@
 package com.kang.coronacheck1.MenuFragment;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -50,8 +49,7 @@ public class Menu1Fragment extends Fragment {
 
     BarChart chart;
     String[] days;
-    private SharedPreferences prefs;
-
+    BarDataSet bardataset;
 
     private TextView tvPatient,tvPatientNum,tvPatientYesterday, tvInspection, tvInspectionNum, tvInspectionYesterday,
             tvSafe, tvSafeNum, tvSafeYesterday, tvDie, tvDieNum, tvDieYesterday;
@@ -75,11 +73,9 @@ public class Menu1Fragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         Log.d(TAG, "Menu1Fragment - onCreateView() called");
 
         viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_menu1,container,false);
-
         init();
         getData();
 
@@ -88,15 +84,14 @@ public class Menu1Fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(TAG, "Menu1Fragment - onResume() called");
         init();
         getData();
     }
 
-
     private void init() {
         Log.d(TAG, "Menu1Fragment - init() called");
 
-        chart = viewGroup.findViewById(R.id.barchart);
         ///////확진자 현황 텍스트뷰
         tvPatient = viewGroup.findViewById(R.id. tv_home_frag_patient);
         tvInspection = viewGroup.findViewById(R.id.tv_home_frag_inspection);
@@ -112,10 +107,35 @@ public class Menu1Fragment extends Fragment {
         tvInspectionYesterday = viewGroup.findViewById(R.id.tv_home_frag_inspection_yesterday);
         tvSafeYesterday = viewGroup.findViewById(R.id.tv_home_frag_safe_yesterday);
         tvDieYesterday = viewGroup.findViewById(R.id.tv_home_frag_die_yesterday);
-        //// 텍스트 변경
+        // 바차트
+        chart = viewGroup.findViewById(R.id.barchart);
+        ArrayList NoOfEmp = new ArrayList();
+
+        bardataset = new BarDataSet(NoOfEmp,"요일별");
+
+        fontInit();
+        barInit();
+
+        // 날짜 배열 만들기
+        days = new String[6];
+        for(int i=5; i>=0;i--){
+            Date dDate = new Date();
+            dDate = new Date(dDate.getTime()+(1000*60*60*24*-1)*(6-i));
+            SimpleDateFormat dSdf = new SimpleDateFormat("MM/dd", Locale.KOREA);
+            days[i] = dSdf.format(dDate);
+            Log.d(TAG, days[i]);
+        }
+        //데이터 셋
+        BarData data = new BarData(days, bardataset);// MPAndroidChart v3.X 오류 발생
+        // bar 차트 색 지정
+        bardataset.setColor(Color.parseColor("#F25041"));
+        data.setValueTextSize(10);
+
+        chart.setData(data);
+    }
+    private void fontInit(){
+        Log.d(TAG, "Menu1Fragment - fontInit() called");
         int flagVar = FlagVar.getState();
-        Log.d("로그" , String.valueOf(flagVar));
-        Log.d("로그" , String.valueOf(flagVar));
         if(flagVar == 1){
             ///////확진자 현황 텍스트뷰
             tvPatient.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
@@ -150,18 +170,26 @@ public class Menu1Fragment extends Fragment {
             tvSafeYesterday.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
             tvDieYesterday.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
         }
-        Log.d(TAG, "Menu1Fragment - onCreateView() called");
+    }
+    private void barInit(){
+        Log.d(TAG, "Menu1Fragment - barInit() called");
+        chart.animateY(3000);
+        XAxis xAxis = chart.getXAxis();
+        YAxis yRAxis = chart.getAxisRight();
 
-        // 날짜 배열 만들기
-        days = new String[7];
-        for(int i=6; i>=0;i--){
-            Date dDate = new Date();
-            dDate = new Date(dDate.getTime()+(1000*60*60*24*-1)*(6-i));
-            SimpleDateFormat dSdf = new SimpleDateFormat("MM/dd", Locale.KOREA);
-            days[i] = dSdf.format(dDate);
-        }
+        chart.setCameraDistance(20);
 
+        //세로선 제거
+        chart.getAxisRight().setDrawGridLines(false);
+        chart.getXAxis().setDrawGridLines(false);
+        chart.getLegend().setEnabled(false);
 
+        //요일 아래 나오게
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        //오른쪽 라벨 지우기
+        yRAxis.setDrawLabels(false);
+        yRAxis.setDrawAxisLine(false);
+        yRAxis.setDrawGridLines(false);
     }
 
     private void getData(){
@@ -174,6 +202,7 @@ public class Menu1Fragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
+            Log.d(TAG, "Menu1Fragment - HomeJsoup called");
             try {
                 Document doc = Jsoup.connect("https://www.worldometers.info/coronavirus/country/south-korea/").get();
                 Document doc1 = Jsoup.connect("https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=%EC%BD%94%EB%A1%9C%EB%82%9819").get();
@@ -192,17 +221,17 @@ public class Menu1Fragment extends Fragment {
                         }
                         Elements report_date = doc.select("div .col-md-12").select("div .news_date");
                         String []reportStringDate = report_date.text().split(" ");
-                        Log.d(TAG, "오늘의 날짜"+reportStringDate[1]);
+                        // Log.d(TAG, "오늘의 날짜"+reportStringDate[1]);
                         Date yDate = new Date();
                         yDate = new Date(yDate.getTime());
                         SimpleDateFormat dSdf = new SimpleDateFormat("d", Locale.KOREA);
                         String phoneDateString = dSdf.format(yDate);
-                        Log.d(TAG, "핸드폰 날짜"+phoneDateString);
+                        // Log.d(TAG, "핸드폰 날짜"+phoneDateString);
                         if(!reportStringDate[1].equals(phoneDateString)){
-                            days = new String[7];
-                            for(int i=6; i>=0;i--){
+                            days = new String[6];
+                            for(int i=5; i>=0;i--){
                                 Date dDate = new Date();
-                                dDate = new Date(dDate.getTime()+(1000*60*60*24*-1)*(7-i));
+                                dDate = new Date(dDate.getTime()+(1000*60*60*24*-1)*(6-i));
                                 SimpleDateFormat yesterdayDate = new SimpleDateFormat("MM/dd", Locale.KOREA);
                                 days[i] = yesterdayDate.format(dDate);
                             }
@@ -218,48 +247,32 @@ public class Menu1Fragment extends Fragment {
                         tvDieYesterday.setText(listYesterdayNum.get(3));
                         // 도표에 넣을 환자 수 크롤링
                         Elements report_patient = doc.select("div .col-md-12").select("div .newsdate_div").select("div div ul li");
+
                         for(int i=0;i<6;i++){
-                            Log.d(TAG, report_patient.get(i).text());
+                          //  Log.d(TAG, report_patient.get(i).text());
                             String []decNum =report_patient.get(i).text().split(" ");
                             listDecNum.add(decNum[0]);
                         }
 
                         ArrayList NoOfEmp = new ArrayList();
-                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(5)), 0));
-                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(4)), 1));
-                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(3)), 2));
-                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(2)), 3));
-                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(1)), 4));
-                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(0)), 5));
-                        NoOfEmp.add(new BarEntry(Float.parseFloat(listYesterdayNum.get(0)), 6));
+                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(4)), 0));
+                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(3)), 1));
+                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(2)), 2));
+                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(1)), 3));
+                        NoOfEmp.add(new BarEntry(Float.parseFloat(listDecNum.get(0)), 4));
+                        NoOfEmp.add(new BarEntry(Float.parseFloat(listYesterdayNum.get(0)), 5));
 
                         BarDataSet bardataset = new BarDataSet(NoOfEmp,"요일별");
-                        chart.animateY(3000);
-                        XAxis xAxis = chart.getXAxis();
-                        YAxis yRAxis = chart.getAxisRight();
-
-                        chart.setCameraDistance(20);
-
-                        //세로선 제거
-                        chart.getAxisRight().setDrawGridLines(false);
-                        chart.getXAxis().setDrawGridLines(false);
-                        chart.getLegend().setEnabled(false);
-                        chart.setDescription(null);
-
-                        //요일 아래 나오게
-                        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-                        //오른쪽 라벨 지우기
-                        yRAxis.setDrawLabels(false);
-                        yRAxis.setDrawAxisLine(false);
-                        yRAxis.setDrawGridLines(false);
-
+                        barInit();
 
                         //데이터 셋
                         BarData data = new BarData(days, bardataset);// MPAndroidChart v3.X 오류 발생
                         // bar 차트 색 지정
                         bardataset.setColor(Color.parseColor("#F25041"));
                         data.setValueTextSize(10);
+
                         chart.setData(data);
+                        chart.setDescription(null);
                     }
                 });
             } catch (IOException e) {

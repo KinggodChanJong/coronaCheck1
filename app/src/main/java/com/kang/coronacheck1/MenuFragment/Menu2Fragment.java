@@ -67,12 +67,11 @@ public class Menu2Fragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         Log.d(TAG, "Menu2Fragment - onCreateView() called");
 
         viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_menu2,container,false);
         //리사이클러뷰 아이템
-        itemView();
+        init();
         getData();
         return viewGroup;
     }
@@ -80,17 +79,23 @@ public class Menu2Fragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        itemView();
+        Log.d(TAG, "Menu2Fragment - onResume() called");
+        init();
         adapter.notifyDataSetChanged();
     }
 
-    private void itemView() {
+    private void init() {
+        Log.d(TAG, "Menu2Fragment - init() called");
         //텍스트 크기 지정
         mTitle = viewGroup.findViewById(R.id.tv_report_frag_title);
         mPatient = viewGroup.findViewById(R.id.tv_report_frag_patient);
         mDaily  = viewGroup.findViewById(R.id.tv_report_frag_daily);
         mDeath = viewGroup.findViewById(R.id.tv_report_frag_death);
 
+        fontInit();
+    }
+    private void fontInit(){
+        Log.d(TAG, "Menu2Fragment - fontInit() called");
         int flagVar = FlagVar.getState();
         if(flagVar == 1) {
             ///////확진자 현황 텍스트뷰
@@ -124,6 +129,7 @@ public class Menu2Fragment extends Fragment{
 
         @Override
         protected Void doInBackground(Void... voids) {
+            Log.d(TAG, "Menu1Fragment - NewsJsoup called");
             try {
                 Document doc = Jsoup.connect("http://ncov.mohw.go.kr").get();
                 Handler handler = new Handler(Looper.getMainLooper()); // 객체생성
@@ -134,14 +140,14 @@ public class Menu2Fragment extends Fragment{
                         Elements report_title = doc.select("div").select("#main_maplayout").select(".name");
                         Elements report_daily = doc.select("div").select("#main_maplayout").select(".before");
 
-                        Log.d(TAG, report_title.text());
-                        Log.d(TAG, report_patient.text());
-                        Log.d(TAG, report_daily.text());
+                        // Log.d(TAG, report_title.text());
+                        // Log.d(TAG, report_patient.text());
+                        // Log.d(TAG, report_daily.text());
 
                         for(int i =0 ; i<18;i++){
                             String temp = "";
                             Elements report_death = doc.select("div").select("#map_city"+(i+1)).select(".mapview").select(".num");
-                            Log.d(TAG, report_death.text());
+                            // Log.d(TAG, report_death.text());
                             CityItem data = new CityItem();
                             listPatient.add(report_patient.get(i).text());
                             listTitle.add(report_title.get(i).text());
@@ -150,7 +156,7 @@ public class Menu2Fragment extends Fragment{
                             listDaily.add(deleteString);
                             listDeath.add(report_death.get(3).text());
 
-                            Log.d(TAG, String.valueOf(i));
+                            // Log.d(TAG, String.valueOf(i));
                             listImage.add(i);
 
                             data.setTitle(listTitle.get(i));
@@ -160,7 +166,7 @@ public class Menu2Fragment extends Fragment{
                             data.setImage(listImage.get(i));
                             adapter.addItem(data);
                         }
-                        Log.d(TAG, listPatient.toString());
+                        // Log.d(TAG, listPatient.toString());
                         adapter.notifyDataSetChanged();
                     }
                 });

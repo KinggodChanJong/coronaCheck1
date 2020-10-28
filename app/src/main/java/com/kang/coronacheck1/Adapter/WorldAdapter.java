@@ -27,7 +27,6 @@ public class WorldAdapter extends RecyclerView.Adapter<WorldAdapter.ViewHolder> 
     private ArrayList<WorldItem> listData = new ArrayList<>();
 
     Context context ;
-    private Typeface typeface;
 
     @NonNull
     @Override
@@ -44,6 +43,7 @@ public class WorldAdapter extends RecyclerView.Adapter<WorldAdapter.ViewHolder> 
         /////텍스트 크기
         int flagVar = FlagVar.getState();
         Log.d("로그" , String.valueOf(flagVar));
+
         if (flagVar == 1){
             TextView title = viewHolder.mRank;
             title.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
@@ -63,7 +63,6 @@ public class WorldAdapter extends RecyclerView.Adapter<WorldAdapter.ViewHolder> 
             TextView death = viewHolder.mDeath;
             death.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
         }
-
     }
     @Override
     public int getItemCount() {
