@@ -1,12 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".QrcodeActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:background="@color/colorBack">
+
+        <Button
+            android:id="@+id/btn_qr_home"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/colorBack"
+            android:text="ssdasd"
+            android:textColor="@color/colorTitleText" />
+
+        <Button
+            android:id="@+id/btn_qr_setting"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/settingbtn2"
+            android:gravity="" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/colorTitleText" />
     <WebView
         android:usesCleartextTraffic="true"
         android:id="@+id/webView"
@@ -22,4 +53,4 @@
         android:layout_height="wrap_content"
         android:text="로그아웃"/>
 
-</RelativeLayout>
+</LinearLayout>
