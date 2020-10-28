@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory android:title="글자 크기 설정">
         <SwitchPreferenceCompat
             android:key="fontsize"
             android:title="크게"
             android:defaultValue="false"
-            android:disableDependentsState="false"
-            />
+            android:disableDependentsState="false" />
     </PreferenceCategory>
-   <!-- <SwitchPreferenceCompat
-        android:key="popup"
-        android:title="도움말 끄기"
-        android:defaultValue="false"
-        android:disableDependentsState="false"
-        />-->
-    <Preference
-        android:title="문의하기"
-        android:key="email">
+
+    <PreferenceCategory android:title="로그아웃">
+        <Preference
+            android:title="QR체크인 로그아웃"
+            android:key="logout" />
+    </PreferenceCategory>
+
+    <PreferenceCategory >
+        <Preference
+           android:title="도움말 보기"
+           android:key="helppop">
         <!--<intent android:targetPackage="com.kang.coronacheck1"
             android:targetClass="com.kang.coronacheck1.EmailActivity"/>-->
-    </Preference>
+        </Preference>
+
+        <Preference
+            android:title="문의하기"
+            android:key="email">
+            <!--<intent android:targetPackage="com.kang.coronacheck1"
+                android:targetClass="com.kang.coronacheck1.EmailActivity"/>-->
+        </Preference>
+    </PreferenceCategory>
+
+
 </PreferenceScreen>

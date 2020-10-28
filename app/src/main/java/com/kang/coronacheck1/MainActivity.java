@@ -28,15 +28,14 @@ import com.kang.coronacheck1.MenuFragment.Menu1Fragment;
 import com.kang.coronacheck1.MenuFragment.Menu3Fragment;
 import com.kang.coronacheck1.MenuFragment.Menu2Fragment;
 import com.kang.coronacheck1.MenuFragment.Menu4Fragment;
-import com.nhn.android.naverlogin.OAuthLogin;
-import com.nhn.android.naverlogin.OAuthLoginHandler;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "로그";
 
 
-    public static OAuthLogin mOAuthLoginInstance;
+    // public static OAuthLogin mOAuthLoginInstance;
     // 네이버 로그인
     public static Context mContext;//새로고침을 위한 추가
     private static Typeface typeface; //글꼴 전역 변경을 위해 추가
@@ -61,12 +60,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
-
-
-
         //플래그 값 받기
        // FlagVar myflag = (FlagVar) getApplicationContext();
         //폰트변경

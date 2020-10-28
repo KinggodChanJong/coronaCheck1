@@ -19,6 +19,7 @@ import me.relex.circleindicator.CircleIndicator;
 
 public class FirstStartActivity extends AppCompatActivity {
 
+    private int count ;
     HelpAdaprter adapter;
     ViewPager viewPager;
     @Override
@@ -38,12 +39,21 @@ public class FirstStartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 skip();
+                Log.d("카운트", String.valueOf(count));
+                if(count == 1){
+                    Intent i = new Intent(getApplication(), MainActivity.class);
+                    startActivity(i);
+                }else if(count > 1){
+                    Intent i = new Intent(getApplication(), SettingMain.class);
+                    startActivity(i);
+                }
             }
         });
     }
     private void skip() {
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
+     /*   Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);*/
+        count += 1;
 
         //환경변수 1로 설정해서 안보이게 해줌
         int infoFirst = 1;

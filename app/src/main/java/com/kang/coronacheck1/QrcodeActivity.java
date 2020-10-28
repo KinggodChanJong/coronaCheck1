@@ -2,10 +2,13 @@ package com.kang.coronacheck1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -14,8 +17,6 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.nhn.android.naverlogin.OAuthLogin;
 
 import java.io.File;
 
@@ -27,7 +28,6 @@ public class QrcodeActivity extends AppCompatActivity {
     private static String OAUTH_CLIENT_SECRET = "iOpZejA0pc";
     private static String OAUTH_CLIENT_NAME = "코로나 체크";
 
-    public static OAuthLogin mOAuthLoginInstance;
 
     public static Context mContext;//새로고침을 위한 추가
 
@@ -61,36 +61,44 @@ public class QrcodeActivity extends AppCompatActivity {
 
         mWebView.loadUrl("https://nid.naver.com/login/privacyQR/");
 
-        mOAuthLoginInstance = OAuthLogin.getInstance();
-
 
         Button btn11 = (Button)findViewById(R.id.btn_logout11);
         btn11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // deleteDir();
-               // clearApplicationCache();
-                clearApplicationData(mContext);
+                //clearApplicationData(this);
                 mWebView.clearCache(true);
                 Intent i = new Intent(QrcodeActivity.this, MainActivity.class);
                 startActivity(i);
+                finish();
             }
         });
-
-
-
     }
-    public static void clearApplicationData(Context context) {
-        File cache = context.getCacheDir();
-        File appDir = new File(cache.getParent());
-        if (appDir.exists()) {
-            String[] children = appDir.list();
-            for (String s : children) {
-                //다운로드 파일은 지우지 않도록 설정
-                //if(s.equals("lib") || s.equals("files")) continue;
-                deleteDir(new File(appDir, s));
-                Log.d("test", "File /data/data/"+context.getPackageName()+"/" + s + " DELETED");
-            }
+
+    public void clearApplicationData(View.OnClickListener onClickListener) {
+        mWebView.clearCache(true);
+        mWebView.clearHistory();
+        // 자동완성은 8.0부터는 내장되어 아래 함수 안먹음
+        mWebView.clearFormData();
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            CookieSyncManager cookieSyncMngr=CookieSyncManager.createInstance(this);
+            cookieSyncMngr.startSync();
+            CookieManager cookieManager=CookieManager.getInstance();
+            cookieManager.removeAllCookie();
+            cookieManager.removeSessionCookie();
+            cookieSyncMngr.stopSync();
+            cookieSyncMngr.sync();
+        }else {
+            CookieManager cookieManager = CookieManager.getInstance();
+            cookieManager.removeAllCookies(new ValueCallback() {
+                @Override
+                public void onReceiveValue(Object value) {
+                    Log.d("onReceiveValue", value.toString());
+                }
+
+            });
+            cookieManager.getInstance().flush();
         }
     }
 

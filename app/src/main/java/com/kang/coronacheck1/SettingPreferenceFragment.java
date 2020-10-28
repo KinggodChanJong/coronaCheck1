@@ -3,6 +3,7 @@ package com.kang.coronacheck1;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
@@ -10,6 +11,10 @@ import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 import android.util.Log;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
+import android.webkit.ValueCallback;
+import android.webkit.WebView;
 
 import androidx.annotation.Nullable;
 import androidx.preference.Preference;
@@ -17,6 +22,8 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
 
 import java.util.prefs.Preferences;
+
+import static java.util.ResourceBundle.clearCache;
 
 public class SettingPreferenceFragment extends PreferenceFragmentCompat  {
     private static final String TAG = "로그";
@@ -51,7 +58,13 @@ public class SettingPreferenceFragment extends PreferenceFragmentCompat  {
         if(key.equals("email")){
             Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:eeee5656@naver.com"));
             startActivity(intent);
+        }else if(key.equals("logout")){
+            clearApplicationData(this);
+        }else if(key.equals("helppop")){
+            Intent intent = new Intent(getContext(),FirstStartActivity.class);
+            startActivity(intent);
         }
+
         return false;
     }
 
@@ -75,5 +88,28 @@ public class SettingPreferenceFragment extends PreferenceFragmentCompat  {
             }
         }
     };
+
+    private void clearApplicationData(SettingPreferenceFragment settingPreferenceFragment) {
+        clearCache();
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            CookieSyncManager cookieSyncMngr=CookieSyncManager.createInstance(QrcodeActivity.mContext);
+            cookieSyncMngr.startSync();
+            CookieManager cookieManager=CookieManager.getInstance();
+            cookieManager.removeAllCookie();
+            cookieManager.removeSessionCookie();
+            cookieSyncMngr.stopSync();
+            cookieSyncMngr.sync();
+        }else {
+            CookieManager cookieManager = CookieManager.getInstance();
+            cookieManager.removeAllCookies(new ValueCallback() {
+                @Override
+                public void onReceiveValue(Object value) {
+                    Log.d("onReceiveValue", value.toString());
+                }
+            });
+            cookieManager.getInstance().flush();
+        }
+    }
 
 }
