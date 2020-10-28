@@ -244,6 +244,7 @@ public class Menu1Fragment extends Fragment {
                         chart.getAxisRight().setDrawGridLines(false);
                         chart.getXAxis().setDrawGridLines(false);
                         chart.getLegend().setEnabled(false);
+                        chart.setDescription(null);
 
                         //요일 아래 나오게
                         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -251,6 +252,7 @@ public class Menu1Fragment extends Fragment {
                         yRAxis.setDrawLabels(false);
                         yRAxis.setDrawAxisLine(false);
                         yRAxis.setDrawGridLines(false);
+
 
                         //데이터 셋
                         BarData data = new BarData(days, bardataset);// MPAndroidChart v3.X 오류 발생

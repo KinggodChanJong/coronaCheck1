@@ -17,8 +17,6 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.nhn.android.naverlogin.OAuthLogin;
 
 import java.io.File;
 

@@ -19,7 +19,7 @@ import me.relex.circleindicator.CircleIndicator;
 
 public class FirstStartActivity extends AppCompatActivity {
 
-    private int count ;
+    private int count = 0 ;
     HelpAdaprter adapter;
     ViewPager viewPager;
     @Override
